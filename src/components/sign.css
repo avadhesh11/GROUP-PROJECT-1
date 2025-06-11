@@ -1,0 +1,35 @@
+.left {
+    width:60%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+
+}
+.sign{
+    width: 100vw;
+    height:100vh;
+    display: flex;
+     align-items: center;
+    justify-content: center;
+    background-image: url('../assets/bg.png');
+}
+.card{
+    width:70%;
+    height:70%;
+    border:2px solid black;
+    display: flex;
+    background-color: white;
+   
+}
+.right {
+    width:40%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right img{
+    width:90%;
+height:80%;
+}
