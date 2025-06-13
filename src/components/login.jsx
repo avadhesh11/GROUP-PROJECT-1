@@ -1,13 +1,11 @@
 import {useState}from 'react';
 import './sign.css';
-import img from '../assets/couple.png'
+import img from '../assets/couple.png';
 import { Link } from 'react-router-dom';
-function Sign(){
+function Login(){
     const [data,setdata]=useState(
         {
-            name:'',
             email:'',
-            phone:'',
             password:''
 
         }
@@ -21,7 +19,7 @@ function Sign(){
   const submit=async(e)=>{
     e.preventDefault();
     try{
-          const response = await fetch('http://localhost:5000/auth/signup', {
+          const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -32,7 +30,7 @@ function Sign(){
       const Data = await response.json();
 
       if (response.ok) {
-        alert('User registered successfully!');
+        alert("User logged in succesfully!");
         console.log(Data);
       } else {
         alert(Data.error);
@@ -50,13 +48,7 @@ return(
     <div className="card">
     <div className="left">
  <h1 >Your Perfect Wedding is waiting</h1>
- <form id="signupForm" onSubmit={submit}>
-  <div className="input-group">
-    <input type="text" id="name" placeholder="Full Name" required="" onChange={handlechange} />
-  </div>
-  <div className="input-group">
-    <input type="tel" id="phone" placeholder="Phone Number" required="" pattern="[0-9]{10}"  onChange={handlechange}/>
-  </div>
+ <form id="LoginForm" onSubmit={submit}>
   <div className="input-group">
        <input type="email" id="email" placeholder="Email" required=""  onChange={handlechange} />
   </div>
@@ -64,12 +56,10 @@ return(
     <input type="password" id="password" placeholder="Password" required=""  onChange={handlechange}/>
   </div>
   <button type="submit" className="login-btn" id="login-btn">
-    Sign Up
+    Login
   </button>
-  
 </form>
-<Link to="/login" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>Already have an account?</Link>
-
+<Link to="/" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>New user? sign up here!</Link>
     </div>
     <div className="right">
 <img src={img} alt="" />
@@ -79,4 +69,4 @@ return(
 </div>
 );
 };
-export default Sign;
+export default Login;

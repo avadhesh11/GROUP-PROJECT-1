@@ -1,35 +1,62 @@
 .left {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:40px;
+}
+.sign {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../assets/bg.png");
+}
+.left{
+     text-align: center;
+}
+.left .login-btn{
+    background-color: black;
+    border-radius: 20px;
     width:60%;
-    height:100%;
-    display: flex;
-    justify-content: center;
+    height:20%;
+    color: white;
+}
+.input-group {
+  margin-bottom: 15px;
 
 }
-.sign{
-    width: 100vw;
-    height:100vh;
-    display: flex;
-     align-items: center;
-    justify-content: center;
-    background-image: url('../assets/bg.png');
+.input-group input {
+  width: 80%;
+  padding: 12px;
+  gap: 7px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  background: #64b3cd;
+  color: #fff;
+  transition: background 0.3s;
 }
-.card{
-    width:70%;
-    height:70%;
-    border:2px solid black;
-    display: flex;
-    background-color: white;
-   
+
+.card {
+  width: 55%;
+  height: 70%;
+  border: 2px solid black;
+  display: flex;
+  background-color: white;
 }
 .right {
-    width:40%;
-    height:100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.right img{
-    width:90%;
-height:80%;
+.right img {
+  width: 90%;
+  height: 80%;
 }
+
