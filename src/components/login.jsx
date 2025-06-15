@@ -45,9 +45,11 @@ function Login(){
     
 return(
 <div className="sign">
-    <div className="card">
+   <div className="card">
     <div className="left">
+   <div className="text">
  <h1 >Your Perfect Wedding is waiting</h1>
+ </div>
  <form id="LoginForm" onSubmit={submit}>
   <div className="input-group">
        <input type="email" id="email" placeholder="Email" required=""  onChange={handlechange} />
@@ -59,7 +61,9 @@ return(
     Login
   </button>
 </form>
-<Link to="/" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>New user? sign up here!</Link>
+<div className="other">
+<Link to="/" class="navi" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>New user? sign up here!</Link>
+</div>
     </div>
     <div className="right">
 <img src={img} alt="" />

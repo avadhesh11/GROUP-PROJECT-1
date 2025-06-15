@@ -47,9 +47,12 @@ function Sign(){
     
 return(
 <div className="sign">
-    <div className="card">
+   <div className="card">
     <div className="left">
+      
+      <div className="text">
  <h1 >Your Perfect Wedding is waiting</h1>
+ </div>
  <form id="signupForm" onSubmit={submit}>
   <div className="input-group">
     <input type="text" id="name" placeholder="Full Name" required="" onChange={handlechange} />
@@ -68,15 +71,17 @@ return(
   </button>
   
 </form>
-<Link to="/login" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>Already have an account?</Link>
-
-    </div>
+<div className="other">
+<Link  class="navi" to="/login" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>Already have an account?</Link>
+<p>or continue with-</p>
+  </div>
+  </div>
     <div className="right">
 <img src={img} alt="" />
-
-    </div>
-    </div>
 </div>
+    </div>
+  
+    </div>
 );
 };
 export default Sign;
