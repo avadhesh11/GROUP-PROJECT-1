@@ -1,11 +1,11 @@
 import React from'react';
+import {userState} from 'react';
 import './VenuePage.css';
-import { NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png'
 
 function VenuePage(){
-    const Block=({image,title,address,rating,review,location,type,vegprice,nonvegprice,capacity,room,more})=>(
+    const Block=({image,title,rating,review,location,type,vegprice,nonvegprice,capacity,room,more})=>(
       <div className="block_material">
          <div className="img_block" style={{backgroundImage:`url(${image})`}}></div>
 
@@ -24,15 +24,15 @@ function VenuePage(){
         </div>
 
         <div className="details_3">
-      <div>Veg ₹{vegprice} <span>per plate</span></div>
-          <div>Non Veg ₹{nonvegprice} <span>per plate</span></div>
+      <div><h4>Veg</h4> <span className="price">₹{vegprice} </span><span>per plate</span></div>
+          <div><h4> Non Veg</h4><span className="price">₹{nonvegprice} </span> <span>per plate</span></div>
         </div>
 
 
         <div className="details_4">
-          <div>{capacity}</div>
+          <div>{capacity} <span>persons</span></div>
           <div>{room} <span>Rooms</span></div>
-          <div>{more}<span>more</span></div>
+          <div> +{more} <span>more</span></div>
         </div>
 
          </div>
@@ -43,8 +43,11 @@ function VenuePage(){
     return(
     <div>
         <Navbar/>
-        <div className="main">
-            <Block image={block_image} title="Title-1"/>
+        <div className="main" /*just taking example i will make the function tommorow*/>
+               <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
+            <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
+
+            <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
         </div>
     </div>
     );

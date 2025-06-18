@@ -1,41 +1,133 @@
 .main {
-  display:flex;
-  flex-wrap: wrap;
-  justify-content:center;
-  padding:2rem;
+  display: flex;
+  flex-wrap:wrap;
   gap:2rem;
-  background-color: #f3f3f3;
+  padding:2rem;
+  justify-content:center;
+  background-color:#ebebeb;
 }
 .block_material {
   width:30%;
-  background:#ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
-  font-family: 'Poppins', sans-serif;
 }
+.block_material:hover {
+  transform: scale(1.03);
+}
+
 .img_block {
-  height: 180px;
+  height:240px;
   background-size: cover;
   background-position: center;
-  position: relative;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
+
 .venue_details {
-  padding:1rem;
-}
-.title_1 {
+  padding: 1rem 1.2rem;
   display: flex;
-  justify-content:space-between;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-family:'Poppins',sans-serif;
+  color: #333;
+}
+
+.detail_1 {
+  display: flex;
   align-items: center;
-  margin-bottom:0.5rem;
+  justify-content: space-between;
 }
 
 .title_block {
-  font-size: 1 rem;
-  font-weight: 600;
-  color: #333;
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex: 1;
+  color: #222;
 }
-.details_2{
-    display: inline;
+
+.detail_1 i.fa-star {
+  color: #fab617;
+  margin-left:0.5rem;
+}
+
+.detail_1 span {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.details_2 {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.details_2 i {
+  margin-right: 0.3rem;
+  color: #d63384;
+}
+
+.details_3 {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 600;
+  gap: 1.5rem;
+}
+
+.details_3 div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.details_3 h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 550;
+  line-height: 1.2;
+}
+
+.details_3 .price {
+  margin-top: 0.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #222;
+}
+
+.details_3 span {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+
+.details_4 {
+  display: flex;
+justify-content: space-evenly;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.details_4 div {
+  background-color: #e0dfdf;
+    border-radius: 5%;
+  display: inline;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details_4 span {
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #888;
 }
