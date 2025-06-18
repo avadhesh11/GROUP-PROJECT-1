@@ -1,0 +1,41 @@
+.main {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  padding:2rem;
+  gap:2rem;
+  background-color: #f3f3f3;
+}
+.block_material {
+  width:30%;
+  background:#ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+.img_block {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.venue_details {
+  padding:1rem;
+}
+.title_1 {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-bottom:0.5rem;
+}
+
+.title_block {
+  font-size: 1 rem;
+  font-weight: 600;
+  color: #333;
+}
+.details_2{
+    display: inline;
+}
