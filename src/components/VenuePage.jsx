@@ -17,9 +17,15 @@ function VenuePage(){
            </div>
 
         <div className="details_2">
-      
-        <i className="fas fa-map-marker-alt"></i>{location}
-        <i className="fas fa-landmark"></i> {type}
+  <div className="truncate-inline">
+    <i className="fas fa-map-marker-alt"></i>
+    <span>{location}</span>
+  </div>
+  
+  <div className="truncate-inline">
+    <i className="fas fa-landmark"></i>
+    <span>{type}</span>
+  </div>
 
         </div>
 
@@ -44,7 +50,7 @@ function VenuePage(){
     <div>
         <Navbar/>
         <div className="main" /*just taking example i will make the function tommorow*/>
-               <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
+               <Block image={block_image} title="Title-1" rating="4.5" review="12" location="487,Tata Nagar, DindayalNagar Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
             <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
 
             <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
