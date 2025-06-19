@@ -6,6 +6,7 @@ import login from "./routes/login.js";
 import home from"./routes/home.js" ;
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import venue from "./routes/venue.js";
 dotenv.config();
 const app=express();
 const PORT=5000;
@@ -16,8 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 mongoose.connect('mongodb://localhost:27017/user')
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log('MongoDB connection error:', err));
+
+
 app.use("/login",login);
 app.use("/auth",auth);
+app.use("/api/venues",venue);
 
 
 app.listen(PORT,() =>{
