@@ -1,0 +1,150 @@
+.main {
+  display: flex;
+  flex-wrap:wrap;
+  gap:2rem;
+  padding:2rem;
+  justify-content:center;
+  background-color:#ebebeb;
+}
+.block_material {
+  width:30%;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+.block_material:hover {
+  transform: scale(1.03);
+}
+
+.img_block {
+  height:240px;
+  border-radius: 13px;
+  background-size: cover;
+  background-position:center;
+  width: 90%;
+ margin: 0.75rem auto;
+}
+
+.venue_details {
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-family:'Poppins',sans-serif;
+  color: #333;
+}
+
+.detail_1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title_block {
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex: 1;
+  color: #222;
+}
+
+.detail_1 i.fa-star {
+  color: #fab617;
+  margin-left:0.5rem;
+}
+
+.detail_1 span {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.details_2 {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content:space-between;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.truncate-inline {
+  display: flex;
+  align-items: center;
+  max-width: 150px;      
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+
+.truncate-inline i {
+ color:   rgb(242, 76, 103);
+ margin-right: 0.4rem;
+}
+
+.truncate-inline span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.details_3 {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 600;
+  gap: 1.5rem;
+}
+
+.details_3 div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.details_3 h4 {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 550;
+  line-height: 1.2;
+}
+
+.details_3 .price {
+  margin-top: 0.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #222;
+}
+
+.details_3 span {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+
+.details_4 {
+  display: flex;
+justify-content: space-evenly;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.details_4 div {
+  background-color: #e0dfdf;
+    border-radius: 5%;
+  display: inline;
+  flex-direction: column;
+  align-items: center;
+}
+
+.details_4 span {
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #888;
+}

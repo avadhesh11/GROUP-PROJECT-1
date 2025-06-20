@@ -7,6 +7,7 @@ import Sign from './components/signup.jsx';
 import Login from './components/login.jsx';
 
 import WeddingCategories from './components/WeddingCategories';
+import VenuePage from'./components/VenuePage.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Sign />} />
       <Route path="/login" element={<Login />} />
       <Route path= "/WeddingCategories" element={<WeddingCategories />}/>
+      <Route path= "/VenuePage" element={<VenuePage />}/>
     </Routes>
     
     </>
