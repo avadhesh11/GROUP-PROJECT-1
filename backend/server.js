@@ -6,18 +6,33 @@ import login from "./routes/login.js";
 import home from"./routes/home.js" ;
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import venue from "./routes/venue.js";
+import categories from "./routes/categories.js";
+
 dotenv.config();
+
+
 const app=express();
 const PORT=5000;
+const MONGO_URI = process.env.MONGO_URI;
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log('MongoDB connection error:', err));
+
 app.use(cors());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/user')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log('MongoDB connection error:', err));
+
+
+
 app.use("/login",login);
 app.use("/auth",auth);
+app.use("/api/venues",venue);
+app.use("/api/categories",categories);
 
 
 app.listen(PORT,() =>{
