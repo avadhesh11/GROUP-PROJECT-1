@@ -47,13 +47,14 @@ function Sign(){
     
 return(
 <div className="sign">
-   <div className="card">
+   <div className="card1">
     <div className="left">
       
       <div className="text">
  <h1 >Your Perfect Wedding is waiting</h1>
  </div>
  <form id="signupForm" onSubmit={submit}>
+
   <div className="input-group">
     <input type="text" id="name" placeholder="Full Name" required="" onChange={handlechange} />
   </div>
