@@ -1,8 +1,16 @@
-import {useState}from 'react';
+import {useState,useEffect}from 'react';
 import './sign.css';
+import Cookies from 'js-cookie';
 import img from '../assets/couple.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 function Login(){
+  const navigate=useNavigate();
+   useEffect(() => {
+    const token = Cookies.get("refreshToken");
+    if (token) {
+      navigate("/WeddingCategories");
+    }
+  }, []);
     const [data,setdata]=useState(
         {
             email:'',
@@ -24,13 +32,15 @@ function Login(){
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials:'include'
       });
 
       const Data = await response.json();
 
       if (response.ok) {
         alert("User logged in succesfully!");
+        navigate("/WeddingCategories");
         console.log(Data);
       } else {
         alert(Data.error);
