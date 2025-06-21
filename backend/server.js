@@ -8,6 +8,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import venue from "./routes/venue.js";
 import categories from "./routes/categories.js";
+import themes from "./routes/themes.js";
 
 dotenv.config();
 
@@ -26,13 +27,11 @@ app.use(cors());
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
-
-
-
 app.use("/login",login);
 app.use("/auth",auth);
 app.use("/api/venues",venue);
 app.use("/api/categories",categories);
+app.use("/api/themes", themes);
 
 
 app.listen(PORT,() =>{

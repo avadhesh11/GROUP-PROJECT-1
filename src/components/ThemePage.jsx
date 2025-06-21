@@ -5,6 +5,18 @@ import Navbar from './Navbar';
 import block_image from '../assets/couple.png';
 
 function ThemePage() {
+  const [themes, setThemes] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/themes")
+      .then((response) => {
+        setThemes(response.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching the themes", error);
+      });
+  }, []);
+
   const Block = ({ image, title, location }) => (
     <div className="block">
       <div className="block-image" style={{ backgroundImage: `url(${image})` }}>
@@ -25,10 +37,15 @@ function ThemePage() {
       <div className="main_img" style={{ backgroundImage: `url(${block_image})` }}>
         <span>THEME</span>
       </div>
+
       <div className="block_content">
-        <Block image={block_image} title="Title-1" location="Location-1" />
-        <Block image={block_image} title="Title-2" location="Location-1" />
-        <Block image={block_image} title="Title-3" location="Location-1" />
+        {themes.length > 0 ? (
+          themes.map((theme) => (
+            <Block key={theme._id} {...theme} />
+          ))
+        ) : (
+          <p style={{ textAlign: 'center', marginTop: '20px' }}>No themes available.</p>
+        )}
       </div>
     </div>
   );
