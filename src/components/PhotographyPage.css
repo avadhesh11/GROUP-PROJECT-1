@@ -28,7 +28,7 @@
   background-size: cover;
   background-position: center;
 }
-.food_details {
+.photo_details {
   padding: 1rem;
 }
 .detail_1 {
@@ -59,24 +59,38 @@
 .details_2 i {
   color: #3f3d3d;
 }
-
 .details_3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 1rem;
   border-top: 1px solid #eee;
+  margin-top: 1rem;
 }
-
 .Type p {
-  display: inline;
-  margin-left: 4px;
-  font-size: 0.8rem;
-  color: #444444;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #777;
 }
 
-.price p {
+.Type span {
+  font-weight: bold;
+  color: #0b0b0b;
+  font-size: 1.2rem;
+}
+.photo_count {
   display: inline;
-  margin-left: 4px;
-  font-size: 1.1rem;
-  color: #1a1919;
+  align-items: center;
+  gap: 6px;
+}
+
+.photo_count i {
+  color: #555;
+  font-size: 1.2rem;
+}
+
+.photo_count p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
 }

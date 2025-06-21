@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import './FoodPage.css';
+import './PhotographyPage.css';
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png';
 
-function FoodPage(){
-  const Block = ({ image, title, rating, review, location, type, price }) => (
+function Photography(){
+ const Block = ({ image, title, rating, review, location, price, photos }) => (
     <div className="block_material">
       <div className="img_block" style={{ backgroundImage: `url(${image})` }}></div>
 
-      <div className="food_details">
+      <div className="photo_details">
         <div className="detail_1">
           <div className="title_block">{title}</div>
           <i className="fas fa-star"></i>
@@ -25,11 +25,12 @@ function FoodPage(){
         </div>
         <div className="details_3">
             <div className="Type">
-               
-              <p>Starting Price ({type})</p>
+             <p>(Photo+Video)</p>
+             <span>₹ {price  }  per day </span>
                 </div>
-                <div className="price">
-                  <p>₹ {price} per plate</p>
+                <div className="photo_count">
+               <i className="fas fa-image"></i>
+               <p>{photos} photos</p>
                 </div>
                 </div>
          </div>
@@ -41,12 +42,11 @@ function FoodPage(){
     <div>
       <Navbar />
         <div className="main_img" style={{ backgroundImage: `url(${block_image})` }}>
-              <span>FOOD</span>
+              <span>PHOTOGRAPHY</span>
             </div>
              <div className="main">
-        <Block image={block_image} title="Jeet Royal" rating="4.5" review="12"location="Ratlam" type="Veg-Menu" price="1500"  /></div>
+        <Block image={block_image} title="Jeet Royal" rating="4.5" review="12"location="Ratlam"  price="50000" photos="350" /></div>
     </div>
   );
 }
-
-export default FoodPage;
+export default Photography;
