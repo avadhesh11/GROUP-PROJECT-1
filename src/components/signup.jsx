@@ -10,7 +10,6 @@ function Sign(){
     if (token) {
       console.log("cookie found");
       navigate("/WeddingCategories");
-
     }
   }, []);
     const [data,setdata]=useState(
