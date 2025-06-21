@@ -9,6 +9,7 @@ import Login from './components/login.jsx';
 import WeddingCategories from './components/WeddingCategories';
 import VenuePage from'./components/VenuePage.jsx';
 import ThemePage from'./components/ThemePage.jsx';
+import FoodPage from './components/FoodPage.jsx';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Route path= "/WeddingCategories" element={<WeddingCategories />}/>
       <Route path= "/VenuePage" element={<VenuePage />}/>
       <Route path= "/ThemePage" element={<ThemePage />}/>
+      <Route path= "/FoodPage" element={<FoodPage />}/>
     </Routes>
     
     </>
