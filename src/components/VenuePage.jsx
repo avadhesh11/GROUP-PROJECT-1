@@ -57,7 +57,7 @@ function VenuePage() {
         <div className="details_4">
           <div>{capacity} <span>persons</span></div>
           <div>{room} <span>Rooms</span></div>
-<<<<<<< HEAD
+
           <div> +{more} <span>more</span></div>
         </div>
 
@@ -66,21 +66,7 @@ function VenuePage() {
          </div>
        
     );
-    return(
-    <div>
-        <Navbar/>
-        <div className="main" /*just taking example i will make the function tommorow*/>
-               <Block image={block_image} title="Title-1" rating="4.5" review="12" location="487,Tata Nagar, DindayalNagar Delhi" type="hotel ,2 BHK room " vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
-            <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
-
-            <Block image={block_image} title="Title-1" rating="4.5" review="12" location="Delhi" type="hotel" vegprice="400" nonvegprice="1000" capacity="2000" room="50" more="4"/>
-=======
-          <div>+{more} <span>more</span></div>
->>>>>>> d96800ddd060439e9ef25f968efded1bb3f9c8eb
-        </div>
-      </div>
-    </div>
-  );
+   
 
   return (
     <div>
