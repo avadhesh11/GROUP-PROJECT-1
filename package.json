@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://avadhesh11.github.io/GROUP-PROJECT-1",
   "scripts": {
     "start": "vite",
     "dev": "vite",
