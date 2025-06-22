@@ -11,6 +11,7 @@ import VenuePage from'./components/VenuePage.jsx';
 import ThemePage from'./components/ThemePage.jsx';
 import FoodPage from './components/FoodPage.jsx';
 import PhotographyPage from './components/PhotographyPage.jsx';
+import MusicPage from './components/MusicPage.jsx';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path= "/ThemePage" element={<ThemePage />}/>
       <Route path= "/FoodPage" element={<FoodPage />}/>
        <Route path= "/PhotographyPage" element={<PhotographyPage />}/>
+        <Route path= "/MusicPage" element={<MusicPage />}/>
     </Routes>
     
     </>
