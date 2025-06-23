@@ -36,6 +36,11 @@ function Sign(){
   }
   const sendotp=async(e)=>{
     e.preventDefault();
+    if(!data.email.endsWith("@gmail.com")){
+      alert("only Gmail accounts are accepted");
+      setdata(prev=>({...prev,email:""}));
+      return;
+    }
     try{
           const response = await fetch('http://localhost:5000/auth/signup', {
         method: 'POST',
@@ -59,6 +64,7 @@ function Sign(){
     } catch (err) {
       console.error('Error:', err);
       alert('Something went wrong.');
+      return;
     
     }
   };
@@ -110,30 +116,28 @@ return(
     <input type="tel" id="phone" placeholder="Phone Number" required="" pattern="[0-9]{10}"  onChange={handlechange}/>
   </div>
   <div className="input-group">
-       <input type="email" id="email" placeholder="Email" required=""  onChange={handlechange} />
+       <input type="email" id="email" placeholder="Email" value={data.email} required=""  onChange={handlechange} />
     
   </div>
-  
-  
   <div className="input-group">
     <input type="password" id="password" placeholder="Password" required=""  onChange={handlechange}/>
   </div>
   <button type="submit" className="login-btn">Send OTP</button>
-  
+  <div className="other">
+<Link to="/" className="navi" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>New user? sign up here!</Link>
+</div>
 </form>
+
 ):(
-<form onSubmit={verifyOtp}>
+<form id="signupForm" onSubmit={verifyOtp}>
               <div className="input-group">
-                <input type="text" id="otp" placeholder="Enter OTP" required onChange={otpchange} />
+                <input type="tel" id="otp" value="" placeholder="Enter OTP" require="" onChange={otpchange} />
               </div>
-              <button type="submit" className="login-btn">Verify otp</button>
+              <button style={{height:30}}  type="submit" className="login-btn">Verify otp</button>
             </form>
           )
 }
-<div className="other">
-<Link  class="navi" to="/login" style={{color:'blue',textDecoration: 'underline', fontStyle: 'italic'}}>Already have an account?</Link>
-<p>or continue with-</p>
-  </div>
+
   </div>
     <div className="right">
 <img src={img} alt="" />

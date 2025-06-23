@@ -42,7 +42,7 @@ router.post('/signup', async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Your OTP for Wedding App",
+      subject: "OTP for Wedding App",
       text: `Your OTP is: ${otp}. It is valid for 10 minutes.`
     });
 
