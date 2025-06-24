@@ -5,12 +5,12 @@ import cors from "cors";
 import User from '../models/user.js';
 import auth from '../services/auth.js';
 import verify from '../middlewares/verify.js';
+import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 const router = express.Router();
 
 dotenv.config();
  const otpStore = new Map();
-
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -27,7 +27,7 @@ function generateOTP() {
 router.post('/signup', async (req, res) => {
   const { name, phone, email, password } = req.body;
   console.log("Received body from frontend:", req.body);
-
+const hashedpass= await bcrypt.hash(password,10);
   try {
     const exist = await User.findOne({ email });
     const exist2 = await User.findOne({ phone });
@@ -37,8 +37,8 @@ router.post('/signup', async (req, res) => {
     const otp = generateOTP();
 
 
-    otpStore.set(email, { otp, user: { name, phone, email, password } });
-
+    otpStore.set(email, { otp, user: { name, phone, email,password: hashedpass } });
+    setTimeout(() => otpStore.delete(email), 10 * 60 * 1000);
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -61,8 +61,6 @@ router.post('/verify-otp', async (req, res) => {
   if (!record) return res.status(400).json({ error: "No OTP found. Please register again." });
 
   if (record.otp !== otp) return res.status(400).json({ error: "Invalid OTP" });
-
-
   const newUser = new User(record.user);
   await newUser.save();
 
@@ -72,7 +70,7 @@ router.post('/verify-otp', async (req, res) => {
   res.cookie("refreshToken", token, {
     httpOnly: false,
     secure: true,
-    sameSite: "lax",
+    sameSite: "strict",
     maxAge: 10 * 24 * 60 * 60 * 1000
   });
 

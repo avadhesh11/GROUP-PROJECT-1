@@ -131,7 +131,7 @@ return(
 ):(
 <form id="signupForm" onSubmit={verifyOtp}>
               <div className="input-group">
-                <input type="tel" id="otp" value="" placeholder="Enter OTP" require="" onChange={otpchange} />
+                <input type="tel" id="otp"  placeholder="Enter OTP" require="" onChange={otpchange} />
               </div>
               <button style={{height:30}}  type="submit" className="login-btn">Verify otp</button>
             </form>
