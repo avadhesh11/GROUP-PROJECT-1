@@ -5,11 +5,12 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import Sign from './components/signup.jsx';
 import Login from './components/login.jsx';
-
+import Cookies from 'js-cookie';
 import WeddingCategories from './components/WeddingCategories';
 import VenuePage from'./components/VenuePage.jsx';
 import ThemePage from'./components/ThemePage.jsx';
 import FoodPage from './components/FoodPage.jsx';
+import PhotographyPage from './components/PhotographyPage.jsx';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Route path= "/VenuePage" element={<VenuePage />}/>
       <Route path= "/ThemePage" element={<ThemePage />}/>
       <Route path= "/FoodPage" element={<FoodPage />}/>
+       <Route path= "/PhotographyPage" element={<PhotographyPage />}/>
     </Routes>
     
     </>
