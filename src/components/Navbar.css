@@ -10,3 +10,13 @@
   color: #171616;
  
 }
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: #111010;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
