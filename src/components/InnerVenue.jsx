@@ -9,14 +9,16 @@ function Venue_Detail() {
     address: '123 Celebration Street, Jaipur',
     VegPrice: '₹899 per plate',
     NonVegPrice: '₹1,040 per plate',
-    destinationPrice: '₹20.00 Lakhs /day for 30 rooms (incl. Rooms + 3 Meals + Venue)'
+    destinationPrice: '20.00 Lakhs ',
+    room:'30',
+
   };
 
   const handleClick = () => {
     alert("Button Clicked!");
   };
 
-  const ImageBlock = ({ image, VenueName, address, VegPrice, NonVegPrice, destinationPrice }) => (
+  const ImageBlock = ({ image, VenueName, address, VegPrice, NonVegPrice, destinationPrice,room }) => (
     <div className="content-wrapper">
       <div
         className="main_image"
@@ -38,7 +40,8 @@ function Venue_Detail() {
         </div>
         <div className="destination-price">
           <h4>Destination Price</h4>
-          <div className="dest-value">{destinationPrice}</div>
+          <div className="dest-value">₹{destinationPrice} /day for {room} rooms (incl. Rooms + 3 Meals + Venue)</div>
+       
         </div>
         <div className="actions">
           <button className="btn message" onClick={handleClick}>Send Message</button>
@@ -58,6 +61,7 @@ function Venue_Detail() {
         VegPrice={details.VegPrice}
         NonVegPrice={details.NonVegPrice}
         destinationPrice={details.destinationPrice}
+      room={details.room}
       />
     </div>
   );
