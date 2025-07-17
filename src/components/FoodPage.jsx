@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import axios from 'axios';
 import './FoodPage.css';
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png';
 
-function FoodPage(){
+function FoodPage() {
+  const [foods, setFoods] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/foods')
+      .then((res) => {
+        console.log('Foods were fetched', res.data);
+        setFoods(res.data);
+      })
+      .catch((error) => {
+        console.log('Error fetching foods', error);
+      });
+  }, []);
+
   const Block = ({ image, title, rating, review, location, type, price }) => (
     <div className="block_material">
       <div className="img_block" style={{ backgroundImage: `url(${image})` }}></div>
@@ -13,7 +27,9 @@ function FoodPage(){
         <div className="detail_1">
           <div className="title_block">{title}</div>
           <i className="fas fa-star"></i>
-          <span>{rating} ({review} reviews)</span>
+          <span>
+            {rating} ({review} reviews)
+          </span>
         </div>
 
         <div className="details_2">
@@ -21,30 +37,41 @@ function FoodPage(){
             <i className="fas fa-map-marker-alt"></i>
             <span>{location}</span>
           </div>
-
         </div>
-        <div className="details_3">
-            <div className="Type">
-               
-              <p>Starting Price ({type})</p>
-                </div>
-                <div className="price">
-                  <p>₹ {price} per plate</p>
-                </div>
-                </div>
-         </div>
 
-         </div>
-       
-    );
+        <div className="details_3">
+          <div className="Type">
+            <p>Starting Price ({type})</p>
+          </div>
+          <div className="price">
+            <p>₹ {price} per plate</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <Navbar />
-        <div className="main_img" style={{ backgroundImage: `url(${block_image})` }}>
-              <span>FOOD</span>
-            </div>
-             <div className="main">
-        <Block image={block_image} title="Jeet Royal" rating="4.5" review="12"location="Ratlam" type="Veg-Menu" price="1500"  /></div>
+      <div className="main_img" style={{ backgroundImage: `url(${block_image})` }}>
+        <span>FOOD</span>
+      </div>
+      <div className="main">
+        {/* <Block
+          image={block_image}
+          title="Jeet Royal"
+          rating="4.5"
+          review="12"
+          location="Ratlam"
+          type="Veg-Menu"
+          price="1500"
+        /> */}
+
+        {foods.map((food)=>{
+          <Block key={food._id} {...food}/>
+        })}
+      </div>
     </div>
   );
 }
