@@ -107,6 +107,16 @@ html, body, #root, .Venue_Detail {
   background-color: #00c853;
   color: #fff;
 }
+.personal_details{
+  height:40vh;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 10;
+}
+.personal_details:hover{
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s ease;
+}
 
 /* Responsive: stack columns vertically on smaller screens */
 @media (max-width: 768px) {

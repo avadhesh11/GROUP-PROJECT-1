@@ -27,6 +27,7 @@ function Venue_Detail() {
       <div className="detail-panel">
         <h2>{VenueName}</h2>
         <p className="address">{address}</p>
+      <hr></hr>
         <div className="pricing-section">
           <h3>Local Price</h3>
           <div className="price-line">
@@ -42,6 +43,9 @@ function Venue_Detail() {
           <h4>Destination Price</h4>
           <div className="dest-value">₹{destinationPrice} /day for {room} rooms (incl. Rooms + 3 Meals + Venue)</div>
        
+        </div>
+        <div className="personal_details">
+          
         </div>
         <div className="actions">
           <button className="btn message" onClick={handleClick}>Send Message</button>
