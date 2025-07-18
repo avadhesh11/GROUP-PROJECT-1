@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png'; // Unused but can be used for fallback
 
+
 function VenuePage() {
   const [venues, setVenues] = useState([]);
 

@@ -1,24 +1,29 @@
-import React from 'react';
-import './InnerVenue.css';
+import React, { useState,useEffect } from 'react'; 
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png';
+import './InnerVenue.css';
 
 function Venue_Detail() {
+  const [phoneCode, setPhoneCode] = useState('+91'); 
+
   const details = {
     VenueName: 'The Royal Palace',
     address: '123 Celebration Street, Jaipur',
     VegPrice: '₹899 per plate',
     NonVegPrice: '₹1,040 per plate',
-    destinationPrice: '20.00 Lakhs ',
-    room:'30',
-
+    destinationPrice: '20.00 Lakhs',
+    room: '30',
   };
 
   const handleClick = () => {
     alert("Button Clicked!");
   };
 
-  const ImageBlock = ({ image, VenueName, address, VegPrice, NonVegPrice, destinationPrice,room }) => (
+  const ImageBlock = ({
+    image, VenueName, address,
+    VegPrice, NonVegPrice,
+    destinationPrice, room
+  }) => (
     <div className="content-wrapper">
       <div
         className="main_image"
@@ -27,7 +32,7 @@ function Venue_Detail() {
       <div className="detail-panel">
         <h2>{VenueName}</h2>
         <p className="address">{address}</p>
-      <hr></hr>
+        <hr />
         <div className="pricing-section">
           <h3>Local Price</h3>
           <div className="price-line">
@@ -41,12 +46,55 @@ function Venue_Detail() {
         </div>
         <div className="destination-price">
           <h4>Destination Price</h4>
-          <div className="dest-value">₹{destinationPrice} /day for {room} rooms (incl. Rooms + 3 Meals + Venue)</div>
-       
+          <div className="dest-value">
+            ₹{destinationPrice} /day for {room} rooms (incl. Rooms + 3 Meals + Venue)
+          </div>
         </div>
+
         <div className="personal_details">
-          
-        </div>
+          <div className="firstline">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="custom-input"
+              style={{ width: '95%' }}
+            />
+
+            <div className="phone-input-container">
+              <select
+                className="country-select"
+                onChange={(e) => setPhoneCode(e.target.value)}
+                defaultValue={phoneCode}
+              >
+                <option value="" disabled>Select Country</option>
+                <option value="+91">India</option>
+                <option value="+1">USA</option>
+                <option value="+44">UK</option>
+                <option value="+971">UAE</option>
+                <option value="+61">Australia</option>
+                <option value="+81">Japan</option>
+                <option value="+49">Germany</option>
+                <option value="+880">Bangladesh</option>
+                <option value="+92">Pakistan</option>
+              </select>
+
+              <div className="code-preview">{phoneCode}</div>
+
+              <input
+                type="tel"
+                className="phone-number"
+                placeholder="Phone number"
+              />
+            </div>
+          </div>
+       <div className="second_line_grid">
+  <input type="email" placeholder="Email Address" className="custom-input" />
+  <input type="date" placeholder="Date" className="custom-input" />
+  <input type="number" placeholder="No. of Rooms" className="custom-input" />
+  <input type="number" placeholder="No. of Guests" className="custom-input" />
+</div>
+
+</div>
         <div className="actions">
           <button className="btn message" onClick={handleClick}>Send Message</button>
           <button className="btn contact" onClick={handleClick}>Contact</button>
@@ -65,7 +113,7 @@ function Venue_Detail() {
         VegPrice={details.VegPrice}
         NonVegPrice={details.NonVegPrice}
         destinationPrice={details.destinationPrice}
-      room={details.room}
+        room={details.room}
       />
     </div>
   );

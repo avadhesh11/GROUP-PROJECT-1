@@ -108,7 +108,7 @@ html, body, #root, .Venue_Detail {
   color: #fff;
 }
 .personal_details{
-  height:40vh;
+  height:50vh;
   background-color: #f1f1f1;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 10;
@@ -116,6 +116,65 @@ html, body, #root, .Venue_Detail {
 .personal_details:hover{
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transition: box-shadow 0.3s ease;
+}
+.custom-input {
+  border: none;
+  border-bottom: 2px solid rgba(246, 0, 0, 0.948);
+  outline: none;
+  padding: 8px 4px;
+  font-size: 16px;
+  width: 45%;
+  margin-top:1rem;
+  margin-left: 1rem;
+  transition: border-color 0.3s ease;
+
+}
+
+.custom-input::placeholder {
+  color: gray;
+}
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: sans-serif;
+  margin: 20px 0;
+}
+
+.country-select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.country-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.phone-number {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.phone-number:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+
+.country-select:focus {
+  border: 1px solid #f44336;
+  outline: none;
 }
 
 /* Responsive: stack columns vertically on smaller screens */
