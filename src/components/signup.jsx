@@ -145,10 +145,10 @@ function Sign() {
               </button>
               <div className="flex flex-col items-center mt-4">
                 <Link
-                  to="/"
+                  to="/login"
                   className="text-blue-600 underline italic text-sm hover:text-blue-800 transition-colors"
                 >
-                  New user? sign up here!
+                  Existing user? Login Here
                 </Link>
               </div>
             </form>
