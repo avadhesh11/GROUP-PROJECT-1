@@ -78,7 +78,7 @@ function Login() {
             </div>
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#F0F0E8] hover:bg-[#e0e0d0] text-gray-800 font-semibold transition-colors mt-2"
+              className="w-full py-3 rounded-xl bg-[white] hover:bg-[#e0e0d0] text-gray-800 font-semibold transition-colors mt-2"
             >
               Login
             </button>

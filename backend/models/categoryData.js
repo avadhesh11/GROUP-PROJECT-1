@@ -3,13 +3,16 @@ import mongoose from "mongoose";
 const categoriesSchema = new mongoose.Schema({
   image: {
     type: String,
-    required: true,
-    default: 'https://via.placeholder.com/300'
+     
+    default: 'https://cdn-icons-png.flaticon.com/512/2748/2748558.png'
   },
   title: {
     type: String,
     required: true,
     trim: true
+  },
+  to:{
+type: String,
   }
 });
 

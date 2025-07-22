@@ -27,7 +27,7 @@ function App() {
         <Route path="/FoodPage" element={<FoodPage />} />
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
         <Route path="/VenueInnerPage" element={<VenueInnerPage />} />
-          <Route path="/InvitationPage" element={<InvitationPage />} />
+          <Route path="/InvitationsPage" element={<InvitationPage />} />
        </Routes>
       <div className="h-[10vh]"/>
       <Footer/>

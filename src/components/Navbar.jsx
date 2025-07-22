@@ -19,11 +19,11 @@ const [categories, setCategories] = useState([]);
       });
   }, []);
 
-  const Categories_card = ({ image, title }) => (
-    <div style={{width:"90%",height:"5%", gap:"1%"}}  className="card">
-      <div className="card_text">{title}</div>
+  const Categories_card = ({ category}) => (
+    <div   className="card">
+      <div className="card_text">{category.title}</div>
       <div className="card_image">
-        <img src={image} alt={title} />
+        <img src={category.image}  />
       </div>
     </div>
   );
@@ -36,7 +36,7 @@ const [categories, setCategories] = useState([]);
       <div className="dropdown-menu">
        <div className="categories_sections">
           {categories.map((category) => (
-            <Categories_card key={category._id} {...category} />
+          <Categories_card key={category.id} category={category} />
           ))}
         </div>
        </div>

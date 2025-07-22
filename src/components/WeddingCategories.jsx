@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import axios from "axios";
-
+import { Link, useNavigate } from 'react-router-dom';
 function WeddingCategories() {
   const [categories, setCategories] = useState([]);
 
@@ -15,15 +15,24 @@ function WeddingCategories() {
         console.log("Error fetching categories", error);
       });
   }, []);
+  
 
-  const Categories_card = ({ image, title }) => (
-    <div className="flex justify-between items-center h-24 rounded-lg bg-gray-100 p-6 shadow-md w-full transition-transform hover:scale-[1.02]">
+  const Categories_card = ({ image, title ,to}) => {
+    const navigate=useNavigate();
+
+  const redirect=()=>{
+    console.log(to);
+navigate(`/${to}`);
+  }; 
+  return(
+    <div onClick={() => redirect()} className="flex justify-between items-center h-24 rounded-lg bg-gray-100 p-6 shadow-md w-full transition-transform hover:scale-[1.02]">
       <div className="text-xl md:text-2xl font-bold text-gray-800">{title}</div>
       <div className="ml-4 flex-shrink-0">
         <img src={image} alt={title} className="w-36 h-24 rounded-lg object-cover" />
       </div>
     </div>
-  );
+  )
+  };
 
   return (
     <div>
