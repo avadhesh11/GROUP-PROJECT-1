@@ -12,7 +12,11 @@ import PhotographyPage from "./components/PhotographyPage.jsx";
 import InvitationPage from "./components/Invitation.jsx";
 import Footer from "./components/Footer.jsx";
 import VenueInnerPage from "./components/InnerVenue.jsx";
-
+import MusicInnerPage from "./components/InnerMusic.jsx";
+import ThemeInnerPage from "./components/InnerTheme.jsx";
+import PhotoInnerPage from "./components/InnerPhoto.jsx";
+import FoodInnerPage from "./components/InnerFood.jsx";
+import InviteInnerPage from "./components/InnerInvitation.jsx";
 
 
 function App() {
@@ -28,6 +32,11 @@ function App() {
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
         <Route path="/VenueInnerPage" element={<VenueInnerPage />} />
           <Route path="/InvitationsPage" element={<InvitationPage />} />
+          <Route path="/MusicInnerPage" element={<MusicInnerPage />} />
+           <Route path="/PhotoInnerPage" element={<PhotoInnerPage />} />
+          <Route path="/ThemeInnerPage" element={<ThemeInnerPage />} />
+           <Route path="/InviteInnerPage" element={<InviteInnerPage />} />
+          <Route path="/FoodInnerPage" element={<FoodInnerPage />} />
        </Routes>
       <div className="h-[10vh]"/>
       <Footer/>

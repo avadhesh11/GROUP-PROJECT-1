@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'; 
 import Navbar from './Navbar';
 import block_image from '../assets/couple.png';
-import './InnerVenue.css';
+import './InnerMusic.css';
 
 function Venue_Detail() {
   const [phoneCode, setPhoneCode] = useState('+91'); 
