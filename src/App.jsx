@@ -9,6 +9,7 @@ import VenuePage from "./components/VenuePage.jsx";
 import ThemePage from "./components/ThemePage.jsx";
 import FoodPage from "./components/FoodPage.jsx";
 import PhotographyPage from "./components/PhotographyPage.jsx";
+import InvitationPage from "./components/Invitation.jsx";
 import Footer from "./components/Footer.jsx";
 import VenueInnerPage from "./components/InnerVenue.jsx";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/FoodPage" element={<FoodPage />} />
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
         <Route path="/VenueInnerPage" element={<VenueInnerPage />} />
+          <Route path="/InvitationPage" element={<InvitationPage />} />
        </Routes>
       <div className="h-[10vh]"/>
       <Footer/>
