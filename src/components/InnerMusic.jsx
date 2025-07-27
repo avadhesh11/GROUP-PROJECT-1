@@ -7,12 +7,9 @@ function Venue_Detail() {
   const [phoneCode, setPhoneCode] = useState('+91'); 
 
   const details = {
-    VenueName: 'The Royal Palace',
+    VenueName: 'The Music',
     address: '123 Celebration Street, Jaipur',
-    VegPrice: '₹899 per plate',
-    NonVegPrice: '₹1,040 per plate',
-    destinationPrice: '20.00 Lakhs',
-    room: '30',
+    StartingPrice: '₹500000',
     photoCount:'150',
   };
 
@@ -22,8 +19,8 @@ function Venue_Detail() {
 
   const ImageBlock = ({
     image, VenueName, address,
-    VegPrice, NonVegPrice,
-    destinationPrice, room,photoCount  }) => (
+    StartingPrice,
+   photoCount  }) => (
 
     <div className="content-wrapper">
       <div className="right"> 
@@ -60,20 +57,10 @@ function Venue_Detail() {
         <h2>{VenueName}</h2>
         <p className="address">{address}</p>
         <div className="pricing-section">
-          <h3>Local Price</h3>
           <div className="price-line">
-            <span className="veg">{VegPrice}</span>
-            <span className="label">Veg price</span>
-          </div>
-          <div className="price-line">
-            <span className="nonveg">{NonVegPrice}</span>
-            <span className="label">Non Veg price</span>
-          </div>
-        </div>
-        <div className="destination-price">
-          <h4>Destination Price</h4>
-          <div className="dest-value">
-            ₹{destinationPrice} /day for {room} rooms (incl. Rooms + 3 Meals + Venue)
+              <span>Starting Price</span>
+            <span className="StartingPrice">{StartingPrice}</span>
+          
           </div>
         </div>
 
@@ -137,10 +124,7 @@ function Venue_Detail() {
         photoCount={details.photoCount}
         VenueName={details.VenueName}
         address={details.address}
-        VegPrice={details.VegPrice}
-        NonVegPrice={details.NonVegPrice}
-        destinationPrice={details.destinationPrice}
-        room={details.room}
+        StartingPrice={details.StartingPrice}
       />
     </div>
   );
