@@ -1,24 +1,29 @@
-import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import img from '../assets/couple.png';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import img from "../assets/couple.png";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { app } from "../firebase";
+import "./common.css";
+const auth = getAuth(app);
+const googleprovider = new GoogleAuthProvider();
 function Sign() {
   const navigate = useNavigate();
   useEffect(() => {
-    const token = Cookies.get('refreshToken');
+    const token = Cookies.get("refreshToken");
     if (token) {
-      console.log('cookie found');
-      navigate('/WeddingCategories');
+      console.log("cookie found");
+      navigate("/WeddingCategories");
     }
   }, []);
   const [part, setpart] = useState(1);
-  const [otp, setotp] = useState('');
+  const [otp, setotp] = useState("");
   const [data, setdata] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    otp:"",
   });
   const handlechange = (e) => {
     setdata({
@@ -26,28 +31,28 @@ function Sign() {
       [e.target.id]: e.target.value,
     });
   };
-  const otpchange = (e) => {
+  const otpchange = () => {
     setotp(e.target.value);
   };
   const sendotp = async (e) => {
     e.preventDefault();
-    if (!data.email.endsWith('@gmail.com')) {
-      alert('only Gmail accounts are accepted');
-      setdata((prev) => ({ ...prev, email: '' }));
+    if (!data.email.endsWith("@gmail.com")) {
+      alert("only Gmail accounts are accepted");
+      setdata((prev) => ({ ...prev, email: "" }));
       return;
     }
     try {
-      const response = await fetch('http://localhost:5000/auth/signup', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/auth/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials: 'include',
+        credentials: "include",
       });
       const Data = await response.json();
       if (response.ok) {
-        alert('OTP sent succesfully');
+        alert("OTP sent succesfully");
         setpart(2);
         console.log(Data);
       } else {
@@ -55,43 +60,63 @@ function Sign() {
         console.error(Data);
       }
     } catch (err) {
-      console.error('Error:', err);
-      alert('Something went wrong.');
+      console.error("Error:", err);
+      alert("Something went wrong.");
       return;
     }
   };
   const verifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/auth/verify-otp', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/auth/verify-otp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: data.email, otp }),
-        credentials: 'include',
+        credentials: "include",
       });
       const Data = await response.json();
       if (response.ok) {
-        alert('user registered succesfully');
-        navigate('/WeddingCategories');
+        alert("user registered succesfully");
+        navigate("/WeddingCategories");
         console.log(Data);
       } else {
         alert(Data.error);
         console.error(Data);
       }
     } catch (err) {
-      console.error('Error:', err);
-      alert('Something went wrong.');
+      console.error("Error:", err);
+      alert("Something went wrong.");
     }
   };
+  async function signwithgoogle() {
+    try {
+      const check = await signInWithPopup(auth, googleprovider);
+      const token = await check.user.getIdToken();
+      await fetch("http://localhost:5000/login/set-cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ token }),
+      });
+      alert("logged in using google sucessfull");
+      navigate("/WeddingCategories");
+    } catch (err) {
+      alert("error logged in using google kindly use another method!");
+      console.log("error logged in usinng google", err);
+    }
+  }
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 py-6 px-2">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
+      <div className="w-full max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
         {/* Left: Form */}
         <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
           <div className="mb-8 text-center md:text-left">
-            <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">Your Perfect Wedding is waiting</h1>
+            <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">
+              Your Perfect Wedding is waiting
+            </h1>
           </div>
           {part === 1 ? (
             <form id="signupForm" onSubmit={sendotp} className="space-y-4">
@@ -139,11 +164,19 @@ function Sign() {
               </div>
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-[#F0F0E8] hover:bg-[#e0e0d0] text-gray-800 font-semibold transition-colors shadow-md mt-2"
+                className="w-full py-3 rounded-xl bg-white hover:bg-[#e0e0d0] text-gray-800 font-semibold transition-colors shadow-md mt-2"
               >
                 Send OTP
               </button>
               <div className="flex flex-col items-center mt-4">
+                OR
+                <button onClick={signwithgoogle} class="google-btn">
+                  <img
+                    src="https://img.icons8.com/color/48/000000/google-logo.png"
+                    alt="Google Logo"
+                  />
+                  <span>Continue with Google</span>
+                </button>
                 <Link
                   to="/login"
                   className="text-blue-600 underline italic text-sm hover:text-blue-800 transition-colors"
@@ -156,8 +189,10 @@ function Sign() {
             <form id="signupForm" onSubmit={verifyOtp} className="space-y-4">
               <div>
                 <input
-                  type="tel"
+                  type="text"
                   id="otp"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
                   placeholder="Enter OTP"
                   required
                   onChange={otpchange}
@@ -175,7 +210,11 @@ function Sign() {
         </div>
         {/* Right: Image */}
         <div className="md:w-1/2 w-full hidden md:flex items-center justify-center bg-[#F0F0E8]">
-          <img src={img} alt="Wedding couple" className="object-cover w-full h-full" />
+          <img
+            src={img}
+            alt="Wedding couple"
+            className="object-cover w-full h-full"
+          />
         </div>
       </div>
     </div>

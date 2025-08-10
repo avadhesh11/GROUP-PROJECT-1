@@ -43,7 +43,7 @@ const hashedpass= await bcrypt.hash(password,10);
       from: process.env.EMAIL_USER,
       to: email,
       subject: "OTP for Wedding App",
-      text: `Your OTP is: ${otp}. It is valid for 10 minutes.`
+      text: `Your OTP is: ${otp}. It is valid for 10 minutes. Please do not share it with anyone.`
     });
 
     return res.status(200).json({ message: "OTP sent to email!" });
