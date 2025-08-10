@@ -6,8 +6,13 @@ import User from '../models/user.js';
 import auth from '../services/auth.js';
 import verify from '../middlewares/verify.js';
 import bcrypt from 'bcryptjs';
+import { OAuth2Client } from 'google-auth-library';
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const router = express.Router();
-
+router.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 dotenv.config();
  router.post('/',async(req,res)=>{
      console.log("LOGIN ROUTE HIT");
@@ -34,5 +39,19 @@ dotenv.config();
      console.error("error (login route):",err);
   }
   });
-
+router.post('/set-cookie', async (req, res) => {
+  const { token } = req.body;
+  try {
+    res.cookie("refreshToken",token,{
+        httpOnly:false,
+        secure:false,
+        sameSite:"strict",
+        maxAge:10*24*60*60*1000
+      });
+    return res.status(200).json({message:"user logged in succesfully"});
+  }catch(err){
+     console.error("error (login route):",err);
+  }
+   
+});
 export default router;

@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import img from '../assets/couple.png';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { getAuth, GoogleAuthProvider ,signInWithPopup} from "firebase/auth";
+import {app} from "../firebase";
+import  './common.css';
+const auth =getAuth(app);
+const googleprovider=new GoogleAuthProvider();
 function Login() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -46,11 +50,27 @@ function Login() {
       alert('Something went wrong.');
     }
   };
+async function signwithgoogle(){
+  try{
+    const check=await signInWithPopup(auth,googleprovider);
+    const token=await check.user.getIdToken();
+    await fetch("http://localhost:5000/login/set-cookie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", 
+      body: JSON.stringify({ token }),
+    });
+    alert("logged in using google sucessfull");
+    navigate('/WeddingCategories');
+  }catch(err){
+    alert("error logged in using google kindly use another method!");
+    console.log("error logged in usinng google",err);
+  }
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 py-6 px-2">
       <div className="w-full max-w-4xl bg-[#F0F0E8] flex flex-col md:flex-row overflow-hidden">
-        {/* Left: Form */}
         <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
           <div className="mb-8 text-center md:text-left">
             <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">Your Perfect Wedding is waiting</h1>
@@ -84,6 +104,11 @@ function Login() {
             </button>
           </form>
           <div className="flex flex-col items-center mt-4">
+            <hr />Or<hr />
+           <button onClick={signwithgoogle} class="google-btn">
+   <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Logo"/>
+    <span>Continue with Google</span>
+</button>
             <Link
               to="/"
               className="text-blue-600 underline italic text-sm hover:text-blue-800 transition-colors"
