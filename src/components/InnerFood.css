@@ -97,6 +97,20 @@ gap: 1rem;
   margin-bottom: 20px;
   font-size: 1.3rem; font-weight: 400;
 }
+.foodType {
+  color: white;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;}
+
+
+.veg {
+  background-color: #018f1b;
+}
+
+.nonveg {
+  background-color: #d91b1b;
+}
 
 .pricing-section, .destination-price {
   margin-bottom: 20px;
@@ -104,40 +118,27 @@ gap: 1rem;
 }
 
 .price-line {
+  padding-top: 2rem;
   display: flex;
-  align-items: baseline;
-  margin-bottom: 8px;
+  color:black;
+  margin-bottom: 15px;
 }
 
-.price-line .veg {
-  color:  #ce0b53;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.price-line .nonveg {
-  color: #ce0b53;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.price-line .label {
-  color: #36910f;
+.price-line span {
   font-weight: 700;
+  
+  font-size: 1.75rem;
 }
 
-/* Destination price styling */
-.destination-price h4 {
-  margin-bottom: 8px;
+.price-line .StartingPrice {
+  color:  #af0202;
+  font-weight: bold;
+  font-size: 1.75rem;
+  margin-left:2rem;
+  margin-right: 8px;
 }
 
-.dest-value {
-  background: #ffe6e6;
-  padding: 10px;
-  border-radius: 4px;
-  color: #322f2f;
-  font-weight: 500;
-}
+
 .firstline{
   font-weight: 600;
   font-size: larger;
@@ -168,6 +169,7 @@ gap: 1rem;
   background-color: #00c853;
   color: #fff;
 }
+
 .personal_details{
   height:50vh;
   background-color: #f1f1f1;
