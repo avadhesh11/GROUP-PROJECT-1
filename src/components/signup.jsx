@@ -23,7 +23,7 @@ function Sign() {
     email: "",
     phone: "",
     password: "",
-    otp:"",
+
   });
   const handlechange = (e) => {
     setdata({
@@ -31,7 +31,7 @@ function Sign() {
       [e.target.id]: e.target.value,
     });
   };
-  const otpchange = () => {
+  const otpchange = (e) => {
     setotp(e.target.value);
   };
   const sendotp = async (e) => {
