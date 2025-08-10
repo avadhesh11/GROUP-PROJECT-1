@@ -5,11 +5,14 @@ import { Menu, X, Search, Heart, User } from 'lucide-react';
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-
+ const[profile,setprofile]=useState(false);
   const hamburger = () => {
     setOpen(!open);
   };
 
+const openprofile=()=>{
+setprofile(!profile);
+}
   useEffect(() => {
     axios.get("http://localhost:5000/api/categories")
       .then((response) => {
@@ -78,7 +81,7 @@ function Navbar() {
                 <Heart size={20} className="text-gray-600" />
               </button>
               
-              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button onClick={openprofile}className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <User size={20} className="text-gray-600" />
               </button>
             </div>
@@ -106,6 +109,17 @@ function Navbar() {
                 className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm"
               />
             </div>
+            {/* Mobile User Actions */}
+            <div className="mt-8 space-y-4">
+              <button className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                <Heart size={20} />
+                <span>Favorites</span>
+              </button>
+              <button onClick={openprofile} className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                <User size={20} />
+                <span>Profile</span>
+              </button>
+            </div>
 
             {/* Categories Grid */}
             <div className="space-y-4">
@@ -117,17 +131,7 @@ function Navbar() {
               </div>
             </div>
 
-            {/* Mobile User Actions */}
-            <div className="mt-8 space-y-4">
-              <button className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                <Heart size={20} />
-                <span>Favorites</span>
-              </button>
-              <button className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                <User size={20} />
-                <span>Profile</span>
-              </button>
-            </div>
+            
           </div>
         </div>
       )}

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Heart, Star, MapPin, Calendar } from 'lucide-react';
 
+
 function WeddingCategories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +66,7 @@ function WeddingCategories() {
             </div>
             <div className="flex items-center space-x-1">
               <MapPin size={14} />
-              <span>500+ venues</span>
+              <span>500+ options</span>
             </div>
           </div>
 
@@ -92,7 +93,7 @@ function WeddingCategories() {
       <Navbar />
       
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
+      {/* <div className="relative bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
@@ -118,7 +119,32 @@ function WeddingCategories() {
             </div>
           </div>
         </div>
+      </div> */}
+      <div className="relative text-white w-full h-screen">
+  {/* Background Video */}
+ <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
+  <source src="/GROUP-PROJECT-1/video.mp4" type="video/mp4" />
+</video>
+
+  {/* Optional overlay for better contrast */}
+  <div className="absolute inset-0 bg-black/40"></div>
+
+  {/* Content */}
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="text-center">
+      <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-pink-200 bg-clip-text text-transparent">
+        Your Dream Wedding
+      </h1>
+      <p className="text-xl md:text-2xl text-pink-100 mb-8 max-w-3xl mx-auto">
+        Plan the perfect celebration with our comprehensive wedding services
+      </p>
+      <div className="flex items-center justify-center space-x-8 text-pink-200">
+        {/* Your buttons or icons */}
       </div>
+    </div>
+  </div>
+</div>
+
 
       {/* Categories Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
