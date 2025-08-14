@@ -16,7 +16,7 @@ const photography = [
     specialty: "Wedding Photography",
     pricePerDay: 15000,
     experience: "10 years",
-    more: 5
+    more: 5  
   },
   {
     _id: "2",

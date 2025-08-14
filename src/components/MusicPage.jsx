@@ -9,30 +9,18 @@ function MusicAndDance() {
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
-  useEffect(() => {
-    // Simulate API call - replace with your actual endpoint
-    setTimeout(() => {
-      const mockData = [
-        {
-          _id: 1,
-          image: block_image,
-          title: "Jeet Royal",
-          rating: "4.5",
-          review: "12",
-          location: "Ratlam",
-          price: "50000",
-          photos: "350",
-          experience: "8 years",
-          speciality: "Classical & Bollywood",
-          duration: "4 hours",
-          teamSize: "15 members"
-        },
-        // Add more mock data as needed
-      ];
-      setPerformers(mockData);
+useEffect(() => {
+  axios.get("http://localhost:5000/api/music")
+    .then((response) => {
+      setPerformers(response.data);
       setLoading(false);
-    }, 1000);
-  }, []);
+    })
+    .catch((error) => {
+      console.error("Error fetching music data", error);
+      setLoading(false);
+    });
+}, []);
+
 
   const PerformerCard = ({ image, title, rating, review, location, price, photos, experience, speciality, duration, teamSize }) => (
     <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-purple-200 hover:-translate-y-2">

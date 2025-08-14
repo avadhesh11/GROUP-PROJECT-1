@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import Navbar from './Navbar';
 import { Star, MapPin, Heart, Filter, ChevronDown, Eye, Palette, Image, Clock, Sparkles } from 'lucide-react';
-
-// Sample images for demonstration
-const sampleImages = [
-  'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-];
 
 function WeddingInvitations() {
   const [invitations, setInvitations] = useState([]);
@@ -16,97 +10,17 @@ function WeddingInvitations() {
   const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      const mockData = [
-        {
-          _id: 1,
-          image: sampleImages[0],
-          title: "Elegant Gold Collection",
-          rating: "4.8",
-          reviews: "156",
-          category: "Traditional",
-          price: "2999",
-          designs: "25",
-          customizable: true,
-          format: "Digital & Print",
-          deliveryTime: "24 hours",
-          designer: "Royal Designs"
-        },
-        {
-          _id: 2,
-          image: sampleImages[1],
-          title: "Floral Romance Suite",
-          rating: "4.9",
-          reviews: "203",
-          category: "Floral",
-          price: "3499",
-          designs: "30",
-          customizable: true,
-          format: "Digital Only",
-          deliveryTime: "12 hours",
-          designer: "Bloom Studio"
-        },
-        {
-          _id: 3,
-          image: sampleImages[2],
-          title: "Modern Minimalist",
-          rating: "4.7",
-          reviews: "98",
-          category: "Modern",
-          price: "2499",
-          designs: "18",
-          customizable: true,
-          format: "Print Only",
-          deliveryTime: "48 hours",
-          designer: "Clean Designs"
-        },
-        {
-          _id: 4,
-          image: sampleImages[3],
-          title: "Royal Heritage",
-          rating: "4.9",
-          reviews: "187",
-          category: "Traditional",
-          price: "4999",
-          designs: "40",
-          customizable: true,
-          format: "Digital & Print",
-          deliveryTime: "24 hours",
-          designer: "Heritage Arts"
-        },
-        {
-          _id: 5,
-          image: sampleImages[0],
-          title: "Bohemian Dreams",
-          rating: "4.6",
-          reviews: "142",
-          category: "Bohemian",
-          price: "3299",
-          designs: "22",
-          customizable: true,
-          format: "Digital Only",
-          deliveryTime: "12 hours",
-          designer: "Free Spirit"
-        },
-        {
-          _id: 6,
-          image: sampleImages[1],
-          title: "Classic Elegance",
-          rating: "4.8",
-          reviews: "234",
-          category: "Classic",
-          price: "3999",
-          designs: "35",
-          customizable: true,
-          format: "Digital & Print",
-          deliveryTime: "24 hours",
-          designer: "Timeless Creations"
-        }
-      ];
-      setInvitations(mockData);
-      setLoading(false);
-    }, 1000);
+    axios.get("http://localhost:5000/api/invitations")
+      .then((response) => {
+        setInvitations(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching invitations", error);
+   
+        setInvitations(mockData);
+        setLoading(false);
+      });
   }, []);
 
   const categories = ['all', 'Traditional', 'Modern', 'Floral', 'Classic', 'Bohemian'];
@@ -229,35 +143,17 @@ function WeddingInvitations() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">      
-      {/* Header Section with Hero Image */}
-      <div className="relative h-96 overflow-hidden">
-        <img 
-          src={sampleImages[0]} 
-          alt="Wedding Invitations" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-900/80 via-purple-900/70 to-pink-900/80"></div>
-        
-        {/* Animated Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 animate-bounce text-white/20">
-            <Heart size={32} />
-          </div>
-          <div className="absolute top-1/3 right-1/4 animate-pulse text-white/20" style={{ animationDelay: '1s' }}>
-            <Sparkles size={24} />
-          </div>
-          <div className="absolute bottom-1/3 left-1/3 animate-bounce text-white/20" style={{ animationDelay: '2s' }}>
-            <Palette size={28} />
-          </div>
-        </div>
-        
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in">
-              WEDDING INVITATIONS
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Wedding Invitations
             </h1>
-            <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+            <p className="text-xl text-pink-100 max-w-2xl mx-auto">
               Create beautiful memories that begin with the perfect invitation
             </p>
             <div className="mt-6">
@@ -270,7 +166,7 @@ function WeddingInvitations() {
       </div>
 
       {/* Category Tabs */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <div className="bg-white border-b border-gray-200 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8 overflow-x-auto py-4">
             {categories.map((category) => (
@@ -362,9 +258,10 @@ function WeddingInvitations() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredInvitations.map((invitation) => (
-              <InvitationCard key={invitation._id} {...invitation} />
-            ))}
+          {invitations.map((invitation) => (
+  <InvitationCard key={invitation._id} {...invitation} />
+))}
+
           </div>
         )}
       </div>

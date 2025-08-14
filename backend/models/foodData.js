@@ -6,7 +6,7 @@ const FoodSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String, // URL or filename stored on your server
+    type: String, 
     required: true
   },
   rating: {
@@ -23,7 +23,7 @@ const FoodSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Veg', 'Non-Veg', 'Veg-Menu', 'Non-Veg-Menu', 'Both'], // customize as needed
+    enum: ['Veg', 'Non-Veg', 'Veg-Menu', 'Non-Veg-Menu', 'Both'], 
     required: true
   },
   price: {
