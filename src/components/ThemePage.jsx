@@ -17,32 +17,7 @@ function ThemePage() {
       })
       .catch((error) => {
         console.log("Error fetching the themes", error);
-        // Add some mock data for demonstration
-        const mockData = [
-          {
-            _id: 1,
-            image: block_image,
-            title: "Royal Wedding Theme",
-            location: "Available Nationwide",
-            rating: "4.8",
-            review: "45",
-            price: "75000",
-            category: "Luxury",
-            elements: "Flowers, Lights, Draping"
-          },
-          {
-            _id: 2,
-            image: block_image,
-            title: "Rustic Garden Theme",
-            location: "Delhi, Mumbai",
-            rating: "4.6",
-            review: "28",
-            price: "45000",
-            category: "Garden",
-            elements: "Wooden Elements, Greenery"
-          },
-          // Add more mock themes as needed
-        ];
+  
         setThemes(mockData);
         setLoading(false);
       });

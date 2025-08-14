@@ -10,26 +10,15 @@ function Photography() {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    // Simulate API call - replace with your actual endpoint
-    setTimeout(() => {
-      const mockData = [
-        {
-          _id: 1,
-          image: block_image,
-          title: "Jeet Royal",
-          rating: "4.5",
-          review: "12",
-          location: "Ratlam",
-          price: "50000",
-          photos: "350",
-          videos: "25",
-          experience: "5 years"
-        },
-        // Add more mock data as needed
-      ];
-      setPhotographers(mockData);
-      setLoading(false);
-    }, 1000);
+    axios.get("http://localhost:5000/api/photography") // your backend route
+      .then(response => {
+        setPhotographers(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching photography data:", error);
+        setLoading(false);
+      });
   }, []);
 
   const PhotographerCard = ({ image, title, rating, review, location, price, photos, videos, experience }) => (
