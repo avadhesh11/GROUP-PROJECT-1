@@ -21,11 +21,8 @@ function Venue_Detail() {
   };
 
   const ImageBlock = ({
-    image, VenueName, address,
-    VegPrice, NonVegPrice,
-    destinationPrice, room,photoCount  }) => (
-
-    <div className="content-wrapper">
+    image, VenueName, address,VegPrice, NonVegPrice, destinationPrice, room,photoCount  }) => (
+     <div className="content-wrapper">
       <div className="right"> 
         <div className="main_image" style={{ backgroundImage: `url(${image})` }}></div>
 

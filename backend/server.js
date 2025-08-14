@@ -10,6 +10,8 @@ import venue from "./routes/venue.js";
 import categories from "./routes/categories.js";
 import themes from "./routes/themes.js";
 import foods from "./routes/food.js";
+import photography from "./routes/photography.js";
+
 
 dotenv.config();
 
@@ -38,6 +40,7 @@ app.use("/api/venues",venue);
 app.use("/api/categories",categories);
 app.use("/api/themes", themes);
 app.use("/api/foods",foods);
+app.use("/api/photography", photography);
 
 
 app.listen(PORT,() =>{

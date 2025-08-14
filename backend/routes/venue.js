@@ -66,7 +66,7 @@ const venue = [
 
 router.get("/",async(req,res)=>{
     try{
-        // const venues = await Venue.find();
+
         res.json(venue);
     }
     catch(err){
