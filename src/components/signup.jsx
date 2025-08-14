@@ -18,13 +18,15 @@ function Sign() {
   }, []);
   const [part, setpart] = useState(1);
   const [otp, setotp] = useState("");
+  const [token,settoken]=useState("");
+  const [askvendor,setvedor]=useState(false);
   const [data, setdata] = useState({
     name: "",
     email: "",
-    phone: "",
     password: "",
 
   });
+
   const handlechange = (e) => {
     setdata({
       ...data,
@@ -90,26 +92,67 @@ function Sign() {
       alert("Something went wrong.");
     }
   };
-  async function signwithgoogle() {
-    try {
-      const check = await signInWithPopup(auth, googleprovider);
-      const token = await check.user.getIdToken();
+ async function signwithgoogle() {
+  try {
+    const check = await signInWithPopup(auth, googleprovider);
+
+    const res = await fetch("http://localhost:5000/auth/glogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullname: check.user.displayName,
+        email: check.user.email,
+      }),
+      credentials: "include",
+    });
+    
+    const data = await res.json();
+const token = await check.user.getIdToken();
+    if (data.message === "Email already exists!") {
+      
       await fetch("http://localhost:5000/login/set-cookie", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ token }),
       });
-      alert("logged in using google sucessfull");
+      navigate("/WeddingCategories");
+    }
+    else{
+      settoken(token)
+      setvedor(true);
+    }
+
+  } catch (err) {
+    console.error("error:", err);
+  }
+}
+const set=async(token)=>{
+    try {
+      await fetch("http://localhost:5000/login/set-cookie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ token: token }),
+      });
       navigate("/WeddingCategories");
     } catch (err) {
-      alert("error logged in using google kindly use another method!");
-      console.log("error logged in usinng google", err);
+      console.error("Error setting cookie:", err);
     }
-  }
+}
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 py-6 px-2">
+      {askvendor ? (
+      <div className="vendor">
+        <h1>Are you a vendor?</h1>
+        <button>YES</button>
+        <button onClick={()=>set(token)}>NO</button>
+      </div>
+    ) :
       <div className="w-full max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
         {/* Left: Form */}
         <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
@@ -130,17 +173,7 @@ function Sign() {
                   className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F0F0E8] text-gray-800"
                 />
               </div>
-              <div>
-                <input
-                  type="tel"
-                  id="phone"
-                  placeholder="Phone Number"
-                  required
-                  pattern="[0-9]{10}"
-                  onChange={handlechange}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F0F0E8] text-gray-800"
-                />
-              </div>
+
               <div>
                 <input
                   type="email"
@@ -170,7 +203,7 @@ function Sign() {
               </button>
               <div className="flex flex-col items-center mt-4">
                 OR
-                <button onClick={signwithgoogle} class="google-btn">
+                <button onClick={signwithgoogle} className="google-btn">
                   <img
                     src="https://img.icons8.com/color/48/000000/google-logo.png"
                     alt="Google Logo"
@@ -216,7 +249,9 @@ function Sign() {
             className="object-cover w-full h-full"
           />
         </div>
+        
       </div>
+}
     </div>
   );
 }

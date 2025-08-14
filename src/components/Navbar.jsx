@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, Heart, User } from 'lucide-react';
-
+import { getAuth,signOut } from 'firebase/auth';
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -9,10 +11,8 @@ function Navbar() {
   const hamburger = () => {
     setOpen(!open);
   };
+const Navigate=useNavigate();
 
-const openprofile=()=>{
-setprofile(!profile);
-}
   useEffect(() => {
     axios.get("http://localhost:5000/api/categories")
       .then((response) => {
@@ -23,6 +23,21 @@ setprofile(!profile);
         console.log("Error fetching categories", error);
       });
   }, []);
+  const logout=async()=>{
+    const auth=getAuth();
+try{
+  await signOut(auth);
+  await fetch("http://localhost:5000/login/logout",{
+    method:"POST",
+    credentials:"include"
+  })
+  localStorage.clear();
+  window.location.reload();
+
+}catch(err){
+  console.log("ERROR LOGGING OUT",err);
+}
+  }
 
   const Categories_card = ({ category }) => (
     <div className="group cursor-pointer p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
@@ -67,7 +82,7 @@ setprofile(!profile);
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                 <input
@@ -80,11 +95,33 @@ setprofile(!profile);
               <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <Heart size={20} className="text-gray-600" />
               </button>
-              
-              <button onClick={openprofile}className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <User size={20} className="text-gray-600" />
-              </button>
-            </div>
+             <div className="relative">
+  <button
+    onClick={() => setprofile(!profile)}
+    className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+  >
+    <User size={20} className="text-gray-600" />
+  </button>
+
+  {profile && (
+    <div className="absolute top-full mt-2 right-0 w-48 bg-white rounded-lg shadow-lg overflow-hidden">
+      {Cookies.get('refreshToken') ? (
+        <>
+          <button className="block px-4 py-2 w-full text-left hover:bg-gray-100">Profile</button>
+          <button onClick={logout}id="logout" className="block px-4 py-2 w-full text-left text-red-500 hover:bg-gray-100">
+            Logout
+          </button>
+        </>
+      ) : (
+        <button onClick={()=>Navigate('/login')}
+          className="block px-4 py-2 w-full text-left hover:bg-gray-100">LOGIN</button>
+      )}
+    </div>
+  )}
+</div>
+
+ 
+               </div>
 
             {/* Mobile Search Icon */}
             <div className="lg:hidden">
@@ -115,11 +152,12 @@ setprofile(!profile);
                 <Heart size={20} />
                 <span>Favorites</span>
               </button>
-              <button onClick={openprofile} className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+              <button onClick={()=>setprofile(!profile)} className="w-full flex items-center space-x-3 p-4 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
                 <User size={20} />
                 <span>Profile</span>
               </button>
             </div>
+           
 
             {/* Categories Grid */}
             <div className="space-y-4">

@@ -25,19 +25,19 @@ function generateOTP() {
 }
 
 router.post('/signup', async (req, res) => {
-  const { name, phone, email, password } = req.body;
+  const { name, email, password } = req.body;
   console.log("Received body from frontend:", req.body);
 const hashedpass= await bcrypt.hash(password,10);
   try {
     const exist = await User.findOne({ email });
-    const exist2 = await User.findOne({ phone });
+    
     if (exist) return res.status(400).json({ error: "Email already exists!" });
-    if (exist2) return res.status(400).json({ error: "Phone number already exists!" });
+   
 
     const otp = generateOTP();
 
 
-    otpStore.set(email, { otp, user: { name, phone, email,password: hashedpass } });
+    otpStore.set(email, { otp, user: { name, email,password: hashedpass } });
     setTimeout(() => otpStore.delete(email), 10 * 60 * 1000);
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -48,6 +48,21 @@ const hashedpass= await bcrypt.hash(password,10);
 
     return res.status(200).json({ message: "OTP sent to email!" });
 
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Server error occurred!" });
+  }
+});
+router.post('/glogin', async (req, res) => {
+  const { fullname,email } = req.body;
+  console.log("Received body from frontend:", req.body);
+  try {
+    const exist = await User.findOne({ email });
+ if (exist) return res.status(409).json({ message: "Email already exists!" });
+ const name=fullname;
+     const newUser = new User({name,email});
+  await newUser.save();
+  console.log("DATA STORED FOR GLOGIN");
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Server error occurred!" });

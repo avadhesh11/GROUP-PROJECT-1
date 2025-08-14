@@ -12,8 +12,6 @@ import themes from "./routes/themes.js";
 import foods from "./routes/food.js";
 
 dotenv.config();
-
-
 const app=express();
 const PORT=5000;
 const MONGO_URI = process.env.MONGO_URI;

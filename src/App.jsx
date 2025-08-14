@@ -18,6 +18,7 @@ import ThemeInnerPage from "./components/InnerTheme.jsx";
 import PhotoInnerPage from "./components/InnerPhoto.jsx";
 import FoodInnerPage from "./components/InnerFood.jsx";
 import InviteInnerPage from "./components/InnerInvitation.jsx";
+import Profile from "./components/profile.jsx";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/ThemeInnerPage" element={<ThemeInnerPage />} />
            <Route path="/InviteInnerPage" element={<InviteInnerPage />} />
           <Route path="/FoodInnerPage" element={<FoodInnerPage />} />
+          <Route path="/Profile" element={<Profile />} />
        </Routes>
       <div className="h-[10vh]"/>
       <Footer/>

@@ -54,4 +54,23 @@ router.post('/set-cookie', async (req, res) => {
   }
    
 });
+router.post('/check',async(req,res)=>{
+const {email}=req.body;
+try{
+  const user=await User.findOne({email});
+  if(!user) return res.status(200).json({message:"new user"});
+  else return res.status(200).json({message:"existinng user"});
+}catch(err){
+  console.error("some error occured",(err));
+}
+});
+router.post('/logout',async(req,res)=>{
+res.clearCookie("refreshToken",{
+  httpOnly:true,
+  sameSite:"strict",
+  secure:true
+})
+res.json({message:"LOGGED OUT SUCESSFULLY"});
+console.log("LOGGED OUT");
+});
 export default router;

@@ -42,7 +42,7 @@ router.get("/", async(req,res)=>{
         // const foods = await Food.find();
         res.json(foods);
     }catch(error){
-        console.log("Error sending/ receiving food between backend and db",error);
+        console.log("Error sending receiving food between backend and db",error);
     }
 })
 
