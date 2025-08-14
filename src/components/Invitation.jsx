@@ -9,19 +9,17 @@ function WeddingInvitations() {
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
 
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/invitations")
-      .then((response) => {
-        setInvitations(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching invitations", error);
-   
-        setInvitations(mockData);
-        setLoading(false);
-      });
-  }, []);
+useEffect(() => {
+  axios.get("http://localhost:5000/api/invitation")
+    .then((response) => {
+      setInvitations(response.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching invitation data", error);
+      setLoading(false);
+    });
+}, []);
 
   const categories = ['all', 'Traditional', 'Modern', 'Floral', 'Classic', 'Bohemian'];
 
