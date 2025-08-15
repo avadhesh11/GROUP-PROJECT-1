@@ -1,49 +1,65 @@
 import React from "react";
 
 export default function Profile() {
+ const user = {
+    name: "Aarav Sharma",
+    email: "aarav@example.com",
+    phone: "+91 98765 43210",
+    location: "Mumbai, India",
+    image:
+      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=200&h=200&fit=crop",
+    weddingsPlanned: 12,
+    upcomingEvents: 3,
+    bio: "Passionate wedding planner helping couples create unforgettable moments.",
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md text-center">
-        
-        {/* Profile Image */}
-        <div className="relative">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
+      {/* Card */}
+      <div className="bg-white shadow-lg rounded-2xl w-full max-w-3xl p-6">
+        {/* Profile Picture */}
+        <div className="flex flex-col items-center">
           <img
-            src="https://via.placeholder.com/150"
+            src={user.image}
             alt="Profile"
-            className="w-32 h-32 mx-auto rounded-full border-4 border-blue-500"
+            className="w-32 h-32 rounded-full border-4 border-pink-300 object-cover"
           />
+          <h2 className="mt-4 text-2xl font-bold text-gray-800">
+            {user.name}
+          </h2>
+          <p className="text-gray-500">{user.bio}</p>
         </div>
 
-        {/* Name & Bio */}
-        <h2 className="mt-4 text-2xl font-bold text-gray-800">John Doe</h2>
-        <p className="text-gray-500 text-sm">@johndoe</p>
-        <p className="mt-2 text-gray-600">
-          Passionate web developer & designer. Love building user-friendly
-          digital experiences.
-        </p>
-
-        {/* Stats */}
-        <div className="flex justify-around mt-6">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">120</h3>
-            <p className="text-gray-500 text-sm">Posts</p>
+        {/* Info Section */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700">Email</h3>
+            <p className="text-gray-600">{user.email}</p>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">5.2k</h3>
-            <p className="text-gray-500 text-sm">Followers</p>
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700">Phone</h3>
+            <p className="text-gray-600">{user.phone}</p>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800">480</h3>
-            <p className="text-gray-500 text-sm">Following</p>
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700">Location</h3>
+            <p className="text-gray-600">{user.location}</p>
+          </div>
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700">Weddings Planned</h3>
+            <p className="text-gray-600">{user.weddingsPlanned}</p>
+          </div>
+          <div className="bg-pink-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-700">Upcoming Events</h3>
+            <p className="text-gray-600">{user.upcomingEvents}</p>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-6 flex gap-3 justify-center">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        <div className="mt-8 flex justify-center gap-4">
+          <button className="px-5 py-2 bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600">
             Edit Profile
           </button>
-          <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400">
+          <button className="px-5 py-2 bg-gray-200 rounded-lg shadow hover:bg-gray-300">
             Logout
           </button>
         </div>

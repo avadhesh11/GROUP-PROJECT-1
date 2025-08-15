@@ -153,9 +153,9 @@ const set=async(token)=>{
         <button onClick={()=>set(token)}>NO</button>
       </div>
     ) :
-      <div className="w-full max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
+      <div className="w-full  max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
         {/* Left: Form */}
-        <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
+        <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12 ">
           <div className="mb-8 text-center md:text-left">
             <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">
               Your Perfect Wedding is waiting

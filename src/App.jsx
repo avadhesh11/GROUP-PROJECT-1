@@ -25,8 +25,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Sign />} />
+        <Route path="/" element={<WeddingCategories />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/sign" element={<Sign />} />
         <Route path="/WeddingCategories" element={<WeddingCategories />} />
         <Route path="/VenuePage" element={<VenuePage />} />
         <Route path="/ThemePage" element={<ThemePage />} />

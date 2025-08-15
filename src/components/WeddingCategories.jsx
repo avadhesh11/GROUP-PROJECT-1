@@ -28,6 +28,7 @@ function WeddingCategories() {
     const redirect = () => {
       console.log(to);
       navigate(`/${to}`);
+       window.scrollTo(0,0);
     };
 
     return (
@@ -168,13 +169,18 @@ function WeddingCategories() {
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center text-white">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+            <h3 className="text-2xl md:text-2xl font-bold mb-4">
               Ready to Start Planning?
+              </h3>
+              <h3 className="text-2xl md:text-4xl font-bold mb-4">
+              USE OUR AI TOOL FOR FREE
             </h3>
             <p className="text-lg mb-8 opacity-90">
-              Get personalized recommendations and start building your dream wedding today
+              Get personalized recommendations using our AI model under your budget
+            <br />
+            !!CURRENTLY NOT AVAIALABLE!!
             </p>
-            <button className="bg-white text-purple-600 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl">
+            <button onClick={()=>alert("This feature is still under development.We will update you once it gets launched!")} className="bg-white text-purple-600 font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl">
               Get Started Today
             </button>
           </div>
