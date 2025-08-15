@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star, Share2, Globe, Image, MapPin, Users, Bed, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft } from 'lucide-react';
-
-function VenueDetail({ venueId }) {
+import { useParams } from "react-router-dom";
+function VenueDetail() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
   const [venueData, setVenueData] = useState(null);
@@ -18,25 +18,30 @@ function VenueDetail({ venueId }) {
     guests: ''
   });
 
+const {id}=useParams();
+const cleanid = id.replace(":", "");
+console.log("id:",id);
+console.log("clearid:",cleanid);
   useEffect(() => {
-    if (!venueId) {
+    if (!cleanid) {
       setError('Venue ID not provided');
       setLoading(false);
       return;
     }
 
-    axios.get(`http://localhost:5000/api/venues/${venueId}`)
-      .then((response) => {
-        console.log('Venue details fetched:', response.data);
-        setVenueData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching venue details:", error);
-        setError('Failed to load venue details');
-        setLoading(false);
-      });
-  }, [venueId]);
+   axios.get(`http://localhost:5000/api/venues/${cleanid}`)
+        .then(res => {
+          console.log(res.data)
+          setLoading(false);
+          setVenueData(res.data)
+        })
+      .catch(err=>{
+      setLoading(false);
+      console.error("Error fetching venue details:", err)
+      
+});
+
+  }, [cleanid]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

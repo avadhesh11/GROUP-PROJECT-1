@@ -75,4 +75,13 @@ router.get("/",async(req,res)=>{
     }
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+const foundVenue = venue.find(v => v._id === id);
+  if (!foundVenue) {
+    return res.status(404).json({ error: "Venue not found" });
+  }
+  res.json(foundVenue);
+});
+
 export default router;

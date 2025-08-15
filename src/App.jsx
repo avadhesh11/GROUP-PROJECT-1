@@ -34,7 +34,7 @@ function App() {
         <Route path="/FoodPage" element={<FoodPage />} />
         <Route path="/MusicPage" element={<MusicPage />} />
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
-        <Route path="/VenueInnerPage" element={<VenueInnerPage />} />
+        <Route path="/VenueInnerPage/:id" element={<VenueInnerPage />} />
           <Route path="/InvitationPage" element={<InvitationPage />} />
           <Route path="/MusicInnerPage" element={<MusicInnerPage />} />
            <Route path="/PhotoInnerPage" element={<PhotoInnerPage />} />

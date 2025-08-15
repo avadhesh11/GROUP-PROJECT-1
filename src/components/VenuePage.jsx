@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Users, Bed, Heart, Filter, ChevronDown } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 function VenuePage() {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-
+const navigate=useNavigate();
   useEffect(() => {
     axios.get("http://localhost:5000/api/venues")
       .then((response) => {
@@ -19,9 +19,13 @@ function VenuePage() {
         setLoading(false);
       });
   }, []);
-
-  const VenueCard = ({ image, title, rating, review, location, type, vegprice, nonvegprice, capacity, room, more }) => (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
+const redirect=(id)=>{
+  navigate(`/VenueInnerPage/:${id}`);
+  window.scroll(0,0);
+}
+  const VenueCard = ({ id,image, title, rating, review, location, type, vegprice, nonvegprice, capacity, room, more }) => (
+    
+    <div onClick={()=>redirect(id)} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -209,7 +213,7 @@ function VenuePage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {venues.map((venue) => (
-              <VenueCard key={venue._id} {...venue} />
+              <VenueCard key={venue._id} id={venue._id} {...venue} />
             ))}
           </div>
         )}
