@@ -53,4 +53,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+const foundMusic = music.find(v => v._id === id);
+  if (!foundMusic) {
+    return res.status(404).json({ error: "Music not found" });
+  }
+  res.json(foundMusic);
+});
+
+
 export default router;

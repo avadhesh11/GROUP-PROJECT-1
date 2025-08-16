@@ -65,6 +65,7 @@ function FoodDetail({ foodId }) {
   };
 
   const handleSubmitEnquiry = async () => {
+    // Validate required fields
     if (!formData.fullName || !formData.phone || !formData.email || !formData.guests) {
       alert('Please fill in all required fields');
       return;
@@ -80,6 +81,7 @@ function FoodDetail({ foodId }) {
 
       if (response.status === 200 || response.status === 201) {
         alert('Enquiry submitted successfully!');
+        // Reset form
         setFormData({
           fullName: '',
           phone: '',

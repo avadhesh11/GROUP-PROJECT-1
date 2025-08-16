@@ -41,9 +41,9 @@ function App() {
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
         <Route path="/VenueInnerPage/:id" element={<VenueInnerPage />} />
           <Route path="/InvitationPage" element={<InvitationPage />} />
-          <Route path="/MusicInnerPage" element={<MusicInnerPage />} />
+          <Route path="/MusicInnerPage/:id" element={<MusicInnerPage />} />
            <Route path="/PhotoInnerPage" element={<PhotoInnerPage />} />
-          <Route path="/ThemeInnerPage" element={<ThemeInnerPage />} />
+          <Route path="/ThemeInnerPage/:id" element={<ThemeInnerPage />} />
            <Route path="/InviteInnerPage" element={<InviteInnerPage />} />
           <Route path="/FoodInnerPage" element={<FoodInnerPage />} />
           <Route path="/Profile" element={<Profile />} />
