@@ -1,34 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
-import { Star, MapPin, Heart, Filter, ChevronDown, Eye, Palette, Image, Clock, Sparkles } from 'lucide-react';
+import { Star, MapPin, Heart, Filter, ChevronDown, Eye, Palette, Image, Clock, Sparkles, Download, Edit3 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function WeddingInvitations() {
   const [invitations, setInvitations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
+  const navigate = useNavigate();
 
-useEffect(() => {
-  axios.get("http://localhost:5000/api/invitation")
-    .then((response) => {
-      setInvitations(response.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching invitation data", error);
-      setLoading(false);
-    });
-}, []);
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/invitation")
+      .then((response) => {
+        setInvitations(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching invitation data", error);
+        setLoading(false);
+      });
+  }, []);
 
-  const categories = ['all', 'Traditional', 'Modern', 'Floral', 'Classic', 'Bohemian'];
+  const redirect = (id) => {
+    navigate(`/InvitationInnerPage/:${id}`);
+    window.scroll(0, 0);
+  }
+
+  const categories = ['all', 'Traditional', 'Modern', 'Floral', 'Classic', 'Bohemian', 'Minimalist'];
 
   const filteredInvitations = activeCategory === 'all' 
     ? invitations 
     : invitations.filter(inv => inv.category === activeCategory);
 
-  const InvitationCard = ({ image, title, rating, reviews, category, price, designs, customizable, format, deliveryTime, designer }) => (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
+  const InvitationCard = ({ id, image, title, rating, reviews, category, price, designs, customizable, format, deliveryTime, designer, location, templates, digitalOnly }) => (
+    <div onClick={() => redirect(id)} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2 cursor-pointer">
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -46,13 +53,19 @@ useEffect(() => {
           </span>
         </div>
         
-        <button className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group">
+        <button 
+          onClick={(e) => e.stopPropagation()} 
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group"
+        >
           <Heart size={18} className="text-white group-hover:text-pink-400 group-hover:fill-current transition-colors" />
         </button>
 
         {/* Preview Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-lg hover:bg-white transition-colors">
+          <button 
+            onClick={(e) => e.stopPropagation()} 
+            className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-lg hover:bg-white transition-colors"
+          >
             <Eye size={24} className="text-pink-600" />
           </button>
         </div>
@@ -77,13 +90,19 @@ useEffect(() => {
 
       {/* Content Section */}
       <div className="p-6">
-        {/* Title and Designer */}
+        {/* Title and Designer/Location */}
         <div className="mb-4">
           <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors line-clamp-1">
             {title}
           </h3>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center justify-between text-gray-600">
             <span className="text-sm">by {designer}</span>
+            {location && (
+              <div className="flex items-center">
+                <MapPin size={12} className="mr-1 text-pink-500" />
+                <span className="text-xs truncate">{location}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -97,42 +116,58 @@ useEffect(() => {
         </div>
 
         {/* Details Grid */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="flex items-center space-x-2 bg-blue-50 px-3 py-2 rounded-lg">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center space-x-1 bg-blue-50 px-3 py-1 rounded-full">
             <Clock size={14} className="text-blue-500" />
-            <div>
-              <div className="text-xs text-gray-500">Delivery</div>
-              <div className="text-sm font-medium text-blue-700">{deliveryTime}</div>
-            </div>
+            <span className="text-sm text-blue-700 font-medium">{deliveryTime}</span>
           </div>
           
-          <div className="flex items-center space-x-2 bg-green-50 px-3 py-2 rounded-lg">
+          <div className="flex items-center space-x-1 bg-green-50 px-3 py-1 rounded-full">
             <Image size={14} className="text-green-500" />
-            <div>
-              <div className="text-xs text-gray-500">Designs</div>
-              <div className="text-sm font-medium text-green-700">{designs} variations</div>
-            </div>
+            <span className="text-sm text-green-700 font-medium">{designs || templates} designs</span>
+          </div>
+          
+          <div className="bg-orange-50 px-3 py-1 rounded-full">
+            <span className="text-sm text-orange-700 font-medium">
+              {digitalOnly ? 'Digital' : format || 'Print+Digital'}
+            </span>
           </div>
         </div>
 
-        {/* Format and Features */}
+        {/* Features Row */}
         <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-1 bg-orange-50 px-3 py-1 rounded-full">
-            <span className="text-sm text-orange-700 font-medium">{format}</span>
-          </div>
+          {customizable && (
+            <div className="flex items-center space-x-1 bg-purple-50 px-3 py-1 rounded-full">
+              <Edit3 size={12} className="text-purple-500" />
+              <span className="text-sm text-purple-700 font-medium">Editable</span>
+            </div>
+          )}
           
           <div className="bg-pink-50 px-3 py-1 rounded-full">
             <span className="text-sm text-pink-700 font-medium">Premium Quality</span>
           </div>
+          
+          {digitalOnly && (
+            <div className="flex items-center space-x-1 bg-indigo-50 px-3 py-1 rounded-full">
+              <Download size={12} className="text-indigo-500" />
+              <span className="text-sm text-indigo-700 font-medium">Instant</span>
+            </div>
+          )}
         </div>
 
         {/* Action Buttons */}
         <div className="flex space-x-3">
-          <button className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
+          <button 
+            onClick={(e) => e.stopPropagation()} 
+            className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center"
+          >
             <Eye size={16} className="mr-2" />
             View Collection
           </button>
-          <button className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-pink-300 hover:bg-pink-50 transition-all duration-300">
+          <button 
+            onClick={(e) => e.stopPropagation()} 
+            className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-pink-300 hover:bg-pink-50 transition-all duration-300"
+          >
             <Heart size={18} className="text-gray-600 hover:text-pink-500" />
           </button>
         </div>
@@ -166,7 +201,7 @@ useEffect(() => {
       {/* Category Tabs */}
       <div className="bg-white border-b border-gray-200 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8 overflow-x-auto py-4">
+          <div className="flex space-x-8 overflow-x-auto py-4 scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category}
@@ -207,7 +242,8 @@ useEffect(() => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Price Range</option>
-                  <option>₹1,000-3,000</option>
+                  <option>₹500-1,500</option>
+                  <option>₹1,500-3,000</option>
                   <option>₹3,000-5,000</option>
                   <option>₹5,000+</option>
                 </select>
@@ -216,18 +252,22 @@ useEffect(() => {
                   <option>Digital Only</option>
                   <option>Print Only</option>
                   <option>Digital & Print</option>
+                  <option>Video Invitation</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Delivery Time</option>
+                  <option>Instant Download</option>
                   <option>12 hours</option>
                   <option>24 hours</option>
                   <option>48 hours</option>
+                  <option>3-5 days</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Features</option>
                   <option>Customizable</option>
                   <option>Multiple Designs</option>
                   <option>Premium Quality</option>
+                  <option>Animation</option>
                 </select>
               </div>
             </div>
@@ -246,6 +286,11 @@ useEffect(() => {
                   <div className="h-6 bg-gray-200 rounded mb-2"></div>
                   <div className="h-4 bg-gray-200 rounded mb-4"></div>
                   <div className="h-16 bg-gray-200 rounded mb-4"></div>
+                  <div className="flex justify-between mb-4">
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                  </div>
                   <div className="flex space-x-3">
                     <div className="flex-1 h-12 bg-gray-200 rounded"></div>
                     <div className="w-12 h-12 bg-gray-200 rounded"></div>
@@ -256,10 +301,9 @@ useEffect(() => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredInvitations.map((invitation) => (
-  <InvitationCard key={invitation._id} {...invitation} />
-))}
-
+            {filteredInvitations.map((invitation) => (
+              <InvitationCard key={invitation._id} id={invitation._id} {...invitation} />
+            ))}
           </div>
         )}
       </div>

@@ -101,4 +101,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+const foundInvitation = invitation.find(v => v._id === id);
+  if (!foundInvitation) {
+    return res.status(404).json({ error: "Invitation not found" });
+  }
+  res.json(foundInvitation);
+});
+
+
 export default router;

@@ -8,6 +8,7 @@ const musicAndDanceSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+      required: true,
     default: 'https://via.placeholder.com/300'
   },
   rating: {

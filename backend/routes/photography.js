@@ -53,5 +53,14 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 });
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+const foundPhoto = photography.find(v => v._id === id);
+  if (!foundPhoto) {
+    return res.status(404).json({ error: "Photo not found" });
+  }
+  res.json(foundPhoto);
+});
+
 
 export default router;

@@ -71,6 +71,7 @@ function ThemeInnerPage() {
   };
 
   const handleSubmitEnquiry = async () => {
+
     if (!formData.fullName || !formData.phone || !formData.email || !formData.guests) {
       alert('Please fill in all required fields');
       return;

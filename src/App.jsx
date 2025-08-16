@@ -34,18 +34,21 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/sign" element={<Sign />} />
         <Route path="/WeddingCategories" element={<WeddingCategories />} />
+
         <Route path="/VenuePage" element={<VenuePage />} />
         <Route path="/ThemePage" element={<ThemePage />} />
         <Route path="/FoodPage" element={<FoodPage />} />
         <Route path="/MusicPage" element={<MusicPage />} />
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
-        <Route path="/VenueInnerPage/:id" element={<VenueInnerPage />} />
-          <Route path="/InvitationPage" element={<InvitationPage />} />
+        <Route path="/InvitationPage" element={<InvitationPage />} />
+
+           <Route path="/VenueInnerPage/:id" element={<VenueInnerPage />} />
           <Route path="/MusicInnerPage/:id" element={<MusicInnerPage />} />
-           <Route path="/PhotoInnerPage" element={<PhotoInnerPage />} />
+           <Route path="/PhotoInnerPage/:id" element={<PhotoInnerPage />} />
           <Route path="/ThemeInnerPage/:id" element={<ThemeInnerPage />} />
-           <Route path="/InviteInnerPage" element={<InviteInnerPage />} />
-          <Route path="/FoodInnerPage" element={<FoodInnerPage />} />
+           <Route path="/InviteInnerPage/:id" element={<InviteInnerPage />} />
+          <Route path="/FoodInnerPage/:id" element={<FoodInnerPage />} />
+          
           <Route path="/Profile" element={<Profile />} />
        </Routes>
        </ThemeProvider>
