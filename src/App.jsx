@@ -25,9 +25,7 @@ function App() {
   return (
     <>
     <ThemeProvider>
-        <div className="bg-white dark:bg-black text-black dark:text-white p-4">
-  If dark mode works, this box should turn black with white text.
-</div>
+  
       <Routes>
       
         <Route path="/" element={<WeddingCategories />} />

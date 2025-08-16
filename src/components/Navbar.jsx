@@ -99,11 +99,11 @@ try{
               <option value="" disabled>
                 Select Location
               </option>
+                <option value="Ujjain">Ujjain</option>
+                  <option value="Inodre">Indore</option>
+                    <option value="Ratlam">Ratlam</option>
               <option value="Delhi">Delhi</option>
               <option value="Mumbai">Mumbai</option>
-              <option value="Bangalore">Bangalore</option>
-              <option value="Chennai">Chennai</option>
-              <option value="Kolkata">Kolkata</option>
               <option value="Hyderabad">Hyderabad</option>
               <option value="Jaipur">Jaipur</option>
               <option value="Ahmedabad">Ahmedabad</option>

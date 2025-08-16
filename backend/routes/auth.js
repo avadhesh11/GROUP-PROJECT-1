@@ -47,6 +47,7 @@ const hashedpass= await bcrypt.hash(password,10);
     });
 
     return res.status(200).json({ message: "OTP sent to email!" });
+     
 
   } catch (err) {
     console.error(err);
