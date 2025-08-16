@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Music, Heart, Filter, ChevronDown, Play, Users, Clock } from 'lucide-react';
-import block_image from '../assets/couple.png';
+import { useNavigate } from 'react-router-dom';
 
 function MusicAndDance() {
   const [performers, setPerformers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-
+ const navigate =useNavigate();
 useEffect(() => {
   axios.get("http://localhost:5000/api/music")
     .then((response) => {
@@ -20,10 +20,13 @@ useEffect(() => {
       setLoading(false);
     });
 }, []);
-
+const redirect=(id)=>{
+  navigate(`/MusicInnerPage/:${id}`);
+  window.scroll(0,0);
+}
 
   const PerformerCard = ({ image, title, rating, review, location, price, photos, experience, speciality, duration, teamSize }) => (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-purple-200 hover:-translate-y-2">
+   <div onClick={()=>redirect(id)} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -136,35 +139,15 @@ useEffect(() => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      {/* Header Section with Hero Image */}
-      <div className="relative h-96 overflow-hidden">
-        <img 
-          src={block_image} 
-          alt="Music & Dance" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/80 via-pink-900/70 to-purple-900/80"></div>
-        
-        {/* Animated Musical Notes */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 animate-bounce text-white/20">
-            <Music size={32} />
-          </div>
-          <div className="absolute top-1/3 right-1/4 animate-pulse text-white/20" style={{ animationDelay: '1s' }}>
-            <Music size={24} />
-          </div>
-          <div className="absolute bottom-1/3 left-1/3 animate-bounce text-white/20" style={{ animationDelay: '2s' }}>
-            <Music size={28} />
-          </div>
-        </div>
-        
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in">
-              MUSIC & DANCE
+   {/* Header Section */}
+      <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+             Music and Dance
             </h1>
-            <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-              Bring rhythm and joy to your celebrations with talented performers
+            <p className="text-xl text-pink-100 max-w-2xl mx-auto">
+             Celebrate your special day with unforgettable music and dance
             </p>
           </div>
         </div>
@@ -196,6 +179,8 @@ useEffect(() => {
                   <option>Delhi</option>
                   <option>Mumbai</option>
                   <option>Ratlam</option>
+                  <option>Hyderabad</option>
+                  <option>Chennai</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Performance Type</option>
@@ -244,7 +229,7 @@ useEffect(() => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {performers.map((performer) => (
-              <PerformerCard key={performer._id} {...performer} />
+              <PerformerCard key={performer._id} id={performer._id} {...performer} />
             ))}
           </div>
         )}
