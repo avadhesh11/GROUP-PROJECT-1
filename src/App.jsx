@@ -19,12 +19,17 @@ import PhotoInnerPage from "./components/InnerPhoto.jsx";
 import FoodInnerPage from "./components/InnerFood.jsx";
 import InviteInnerPage from "./components/InnerInvitation.jsx";
 import Profile from "./components/profile.jsx";
-
+import { ThemeProvider } from "./context/themecontext.jsx";
 
 function App() {
   return (
     <>
+    <ThemeProvider>
+        <div className="bg-white dark:bg-black text-black dark:text-white p-4">
+  If dark mode works, this box should turn black with white text.
+</div>
       <Routes>
+      
         <Route path="/" element={<WeddingCategories />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign" element={<Sign />} />
@@ -43,6 +48,7 @@ function App() {
           <Route path="/FoodInnerPage" element={<FoodInnerPage />} />
           <Route path="/Profile" element={<Profile />} />
        </Routes>
+       </ThemeProvider>
       <div className="h-[10vh]"/>
       <Footer/>
     </>
