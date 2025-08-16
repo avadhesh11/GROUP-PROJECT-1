@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
-import { Star, MapPin, Users, Utensils, Heart, Filter, ChevronDown } from 'lucide-react';
+import { Star, MapPin, Users, Bed, Heart, Filter, ChevronDown, Utensils } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function FoodPage() {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/foods")
@@ -20,8 +22,13 @@ function FoodPage() {
       });
   }, []);
 
-  const FoodCard = ({ image, title, rating, review, location, type, price }) => (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2">
+  const redirect = (id) => {
+    navigate(`/FoodInnerPage/:${id}`);
+    window.scroll(0, 0);
+  }
+
+  const FoodCard = ({ id, image, title, rating, review, location, type, price, cuisine, servingStyle, minOrder }) => (
+    <div onClick={() => redirect(id)} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-pink-200 hover:-translate-y-2 cursor-pointer">
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <img 
@@ -38,7 +45,10 @@ function FoodPage() {
           </span>
         </div>
         
-        <button className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group">
+        <button 
+          onClick={(e) => e.stopPropagation()} 
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 group"
+        >
           <Heart size={18} className="text-white group-hover:text-pink-400 group-hover:fill-current transition-colors" />
         </button>
 
@@ -75,19 +85,35 @@ function FoodPage() {
           </div>
         </div>
 
-        {/* Menu Type Badge */}
-        <div className="flex justify-center mb-4">
-          <div className="bg-green-50 px-4 py-2 rounded-full border border-green-200">
-            <span className="text-sm text-green-700 font-medium">{type} Menu</span>
+        {/* Service Details */}
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center space-x-1 bg-green-50 px-3 py-1 rounded-full">
+            <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+            <span className="text-sm text-green-700 font-medium">{cuisine || 'Multi-Cuisine'}</span>
+          </div>
+          
+          <div className="flex items-center space-x-1 bg-blue-50 px-3 py-1 rounded-full">
+            <Users size={14} className="text-blue-500" />
+            <span className="text-sm text-blue-700 font-medium">Min {minOrder || 50}</span>
+          </div>
+          
+          <div className="bg-purple-50 px-3 py-1 rounded-full">
+            <span className="text-sm text-purple-700 font-medium">{servingStyle || 'Buffet'}</span>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex space-x-3">
-          <button className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg">
+          <button 
+            onClick={(e) => e.stopPropagation()} 
+            className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg"
+          >
             View Menu
           </button>
-          <button className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-pink-300 hover:bg-pink-50 transition-all duration-300">
+          <button 
+            onClick={(e) => e.stopPropagation()} 
+            className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-pink-300 hover:bg-pink-50 transition-all duration-300"
+          >
             <Heart size={18} className="text-gray-600 hover:text-pink-500" />
           </button>
         </div>
@@ -100,7 +126,7 @@ function FoodPage() {
       <Navbar />
       
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-blue-400 via-indigo-600 to-purple-500 text-white">
+      <div className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -139,24 +165,30 @@ function FoodPage() {
                   <option>Delhi</option>
                   <option>Mumbai</option>
                   <option>Bangalore</option>
+                  <option>Chennai</option>
+                  <option>Kolkata</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Cuisine Type</option>
-                  <option>Vegetarian</option>
-                  <option>Non-Vegetarian</option>
-                  <option>Mixed</option>
+                  <option>North Indian</option>
+                  <option>South Indian</option>
+                  <option>Chinese</option>
+                  <option>Continental</option>
+                  <option>Multi-Cuisine</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Price Range</option>
                   <option>₹300-500</option>
                   <option>₹500-1000</option>
-                  <option>₹1000+</option>
+                  <option>₹1000-1500</option>
+                  <option>₹1500+</option>
                 </select>
                 <select className="p-2 border border-gray-300 rounded-lg">
                   <option>Service Type</option>
                   <option>Buffet</option>
-                  <option>Plated</option>
+                  <option>Plated Service</option>
                   <option>Live Counter</option>
+                  <option>Family Style</option>
                 </select>
               </div>
             </div>
@@ -175,6 +207,11 @@ function FoodPage() {
                   <div className="h-6 bg-gray-200 rounded mb-2"></div>
                   <div className="h-4 bg-gray-200 rounded mb-4"></div>
                   <div className="h-16 bg-gray-200 rounded mb-4"></div>
+                  <div className="flex justify-between mb-4">
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                    <div className="h-8 w-20 bg-gray-200 rounded-full"></div>
+                  </div>
                   <div className="flex space-x-3">
                     <div className="flex-1 h-12 bg-gray-200 rounded"></div>
                     <div className="w-12 h-12 bg-gray-200 rounded"></div>
@@ -186,7 +223,7 @@ function FoodPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {foods.map((food) => (
-              <FoodCard key={food._id} {...food} />
+              <FoodCard key={food._id} id={food._id} {...food} />
             ))}
           </div>
         )}

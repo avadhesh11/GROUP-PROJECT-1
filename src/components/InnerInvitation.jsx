@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import Navbar from './Navbar';
-import { Heart, Star, Share2, Image, MapPin, Users, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, Palette, Clock, Award, Download, Eye, Sparkles, Printer, FileText, Zap, CheckCircle } from 'lucide-react';
+import { Heart, Star, Share2, Globe, Image, MapPin, Users, Bed, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, Download, Eye, FileText, Palette, Clock, CheckCircle, Award, Sparkles } from 'lucide-react';
 
-function InvitationDetail({ invitationId }) {
+function InvitationDetail() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
   const [invitationData, setInvitationData] = useState(null);
@@ -22,25 +20,29 @@ function InvitationDetail({ invitationId }) {
     specialRequests: ''
   });
 
+  // Mock data for demonstration
+  const mockInvitationData = {
+    _id: '12345',
+    title: 'Elegant Rose Gold Wedding Invitation',
+    designer: 'Priya Designs',
+    category: 'Modern',
+    price: 2500,
+    rating: 4.8,
+    reviews: 156,
+    designs: 8,
+    deliveryTime: '24 hours',
+    format: 'Digital + Print',
+    image: '/api/placeholder/800/600',
+    description: 'A stunning modern wedding invitation featuring elegant rose gold accents, sophisticated typography, and beautiful floral elements. Perfect for contemporary couples looking for a blend of elegance and romance.'
+  };
+
   useEffect(() => {
-    if (!invitationId) {
-      setError('Invitation ID not provided');
+    // Simulate API call with mock data
+    setTimeout(() => {
+      setInvitationData(mockInvitationData);
       setLoading(false);
-      return;
-    }
-    
-    axios.get(`http://localhost:5000/api/invitation/${invitationId}`)
-      .then((response) => {
-        console.log('Invitation details fetched:', response.data);
-        setInvitationData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching invitation details:", error);
-        setError('Failed to load invitation details');
-        setLoading(false);
-      });
-  }, [invitationId]);
+    }, 1000);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,56 +52,39 @@ function InvitationDetail({ invitationId }) {
     }));
   };
 
-  const handleShortlist = async () => {
-    try {
-      const response = await axios.post(`http://localhost:5000/api/invitation/${invitationData._id}/shortlist`, {}, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      
-      if (response.status === 200) {
-        setIsShortlisted(!isShortlisted);
-      }
-    } catch (err) {
-      console.error('Error updating shortlist:', err);
-      setIsShortlisted(!isShortlisted);
-    }
+  const handleShortlist = () => {
+    setIsShortlisted(!isShortlisted);
+    // In a real app, this would make an API call without localStorage
+    console.log('Shortlist status changed:', !isShortlisted);
   };
 
-  const handleSubmitEnquiry = async () => {
+  const handleSubmitEnquiry = () => {
     if (!formData.fullName || !formData.phone || !formData.email || !formData.quantity) {
       alert('Please fill in all required fields');
       return;
     }
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/invitation-enquiries', {
-        invitationId: invitationData._id,
-        designerName: invitationData.designer,
-        invitationTitle: invitationData.title,
-        selectedPackage,
-        ...formData,
-        phoneCode
-      });
-
-      if (response.status === 200 || response.status === 201) {
-        alert('Enquiry submitted successfully!');
-        setFormData({
-          fullName: '',
-          phone: '',
-          email: '',
-          eventDate: '',
-          eventType: 'wedding',
-          quantity: '100',
-          customizationLevel: 'basic',
-          specialRequests: ''
-        });
-      }
-    } catch (err) {
-      console.error('Error submitting enquiry:', err);
-      alert('Failed to submit enquiry. Please try again.');
-    }
+    // In a real app, this would make an API call
+    console.log('Enquiry submitted:', {
+      invitationId: invitationData._id,
+      designerName: invitationData.designer,
+      invitationTitle: invitationData.title,
+      selectedPackage,
+      ...formData,
+      phoneCode
+    });
+    
+    alert('Enquiry submitted successfully!');
+    setFormData({
+      fullName: '',
+      phone: '',
+      email: '',
+      eventDate: '',
+      eventType: 'wedding',
+      quantity: '100',
+      customizationLevel: 'basic',
+      specialRequests: ''
+    });
   };
 
   const handleShare = () => {
@@ -148,7 +133,7 @@ function InvitationDetail({ invitationId }) {
   };
 
   const sampleDesigns = [
-    { type: 'Main Invitation', preview: invitationData?.image },
+    { type: 'Main Invitation', preview: '/api/placeholder/400/500' },
     { type: 'Save the Date', preview: '/api/placeholder/400/500' },
     { type: 'RSVP Card', preview: '/api/placeholder/400/500' },
     { type: 'Menu Card', preview: '/api/placeholder/400/500' },
@@ -159,7 +144,6 @@ function InvitationDetail({ invitationId }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
@@ -173,7 +157,6 @@ function InvitationDetail({ invitationId }) {
   if (error && !invitationData) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <p className="text-red-600 text-lg mb-2">Error loading invitation details</p>
@@ -192,7 +175,22 @@ function InvitationDetail({ invitationId }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-gray-900">Wedding Invitations</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Heart className="w-6 h-6 text-gray-400 hover:text-pink-500 cursor-pointer" />
+              <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
+                <span className="text-sm font-medium text-pink-600">U</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
       {/* Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -394,7 +392,7 @@ function InvitationDetail({ invitationId }) {
                   </p>
                   <div className="flex items-center space-x-6 text-sm text-gray-600">
                     <div className="flex items-center">
-                      <Award size={16} className="mr-1 text-gold-500" />
+                      <Award size={16} className="mr-1 text-yellow-500" />
                       <span>Premium Designer</span>
                     </div>
                     <div className="flex items-center">

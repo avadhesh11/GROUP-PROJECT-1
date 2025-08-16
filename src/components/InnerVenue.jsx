@@ -21,7 +21,7 @@ function VenueDetail() {
 const {id}=useParams();
 const cleanid = id.replace(":", "");
 console.log("id:",id);
-console.log("clearid:",cleanid);
+console.log("cleanid:",cleanid);
   useEffect(() => {
     if (!cleanid) {
       setError('Venue ID not provided');

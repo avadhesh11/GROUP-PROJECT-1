@@ -1,7 +1,8 @@
 import express from "express";
-import Food from "../models/foodData.js";
 import axios from "axios";
-
+import dotenv from "dotenv";
+import cors from "cors";
+import Venue from '../models/foodData.js';
 const router = express.Router();
 
 const foods = [
@@ -42,8 +43,17 @@ router.get("/", async(req,res)=>{
         // const foods = await Food.find();
         res.json(foods);
     }catch(error){
-        console.log("Error sending receiving food between backend and db",error);
+           console.error(err);
+        res.status(500).json({ error: 'Server Error' });
     }
-})
+});
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+const foundFood= foods.find(v => v._id === id);
+  if (!foundFood) {
+    return res.status(404).json({ error: "Food Page not found" });
+  }
+  res.json(foundFood);
+});
 export default router;

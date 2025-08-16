@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star, Share2, Globe, Image, MapPin, Users, Utensils, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, ChefHat, Clock, Award } from 'lucide-react';
+import { useParams } from "react-router-dom";
 
-function FoodDetail({ foodId }) {
+function FoodDetail() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
   const [foodData, setFoodData] = useState(null);
@@ -18,26 +19,30 @@ function FoodDetail({ foodId }) {
     menuType: 'vegetarian',
     specialRequests: ''
   });
+  const { id } = useParams();
+  const cleanid = id.replace(":", "");
+  console.log("id:", id);
+  console.log("cleanid:", cleanid);
 
   useEffect(() => {
-    if (!foodId) {
+    if (!cleanid) {
       setError('Food ID not provided');
       setLoading(false);
       return;
     }
     
-        axios.get(`http://localhost:5000/api/venues/${foodId}`)
-          .then((response) => {
-            console.log('Venue details fetched:', response.data);
-            setFoodData(response.data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching venue details:", error);
-            setError('Failed to load venue details');
-            setLoading(false);
-          });
-  }, [foodId]);
+    axios.get(`http://localhost:5000/api/foods/${cleanid}`)
+      .then(res => {
+        console.log(res.data)
+        setLoading(false);
+        setFoodData(res.data) // Fixed: Changed from setThemeData to setFoodData
+      })
+      .catch(err => {
+        setLoading(false);
+        console.error("Error fetching food details:", err)
+        setError('Failed to load food details');
+      });
+  }, [cleanid]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -143,7 +148,7 @@ function FoodDetail({ foodId }) {
     );
   }
 
-  if (error && !foodData) {
+  if (error || !foodData) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
@@ -185,7 +190,7 @@ function FoodDetail({ foodId }) {
             {/* Hero Image */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
               <img 
-                src={foodData.image || '/api/placeholder/800/500'} 
+                src={foodData.image || foodData.images?.[0]} 
                 alt={foodData.title}
                 className="w-full h-96 lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
