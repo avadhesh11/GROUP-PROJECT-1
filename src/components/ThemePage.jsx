@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import { Star, MapPin, Palette, Heart, Filter, ChevronDown, Eye, Sparkles } from 'lucide-react';
 import block_image from '../assets/couple.png';
 
+
 function ThemePage() {
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(true);
