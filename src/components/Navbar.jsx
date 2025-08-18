@@ -26,6 +26,7 @@ const Navigate=useNavigate();
         console.log("Error fetching categories", error);
       });
   }, []);
+
   const logout=async()=>{
     const auth=getAuth();
 try{
@@ -192,7 +193,7 @@ try{
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70" size={18} />
             <input
               type="text"
-              placeholder="Search venues, photographers..."
+              placeholder="Search Venues, Photography..."
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm"
             />
           </div>
