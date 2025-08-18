@@ -134,19 +134,19 @@ try{
               </button>
 
               {profile && (
-                <div className="absolute top-full mt-2 right-0 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div className="absolute top-full mt-2 dark:bg-gray-400 right-0 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
                   {Cookies.get('refreshToken') ? (
                     <>
                       <button
                         onClick={() => Navigate('/profile')}
-                        className="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="block px-4 dark:text-white py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         Profile
                       </button>
                       <button
                         onClick={logout}
                         id="logout"
-                        className="block px-4 py-2 w-full text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="block px-4 dark:text-red py-2 w-full text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         Logout
                       </button>
@@ -154,7 +154,7 @@ try{
                   ) : (
                     <button
                       onClick={() => Navigate('/login')}
-                      className="block px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="block px-4 dark:text-white py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       LOGIN
                     </button>
@@ -167,7 +167,7 @@ try{
                 onClick={toggleTheme}
                 className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
               >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+                {theme === "light" ? <Moon size={20} /> : <Sun className='text-white 'size={20} />}
               </button>
             </div>
           </div>

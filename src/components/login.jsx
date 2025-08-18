@@ -69,10 +69,10 @@ async function signwithgoogle(){
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 py-6 px-2 ">
+    <div className="min-h-screen w-full  flex items-center justify-center bg-gray-50 py-6 px-2 ">
       <div className="w-full max-w-4xl bg-[#F0F0E8] flex flex-col md:flex-row overflow-hidden rounded  ">
         <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
-          <div className="mb-8 text-center md:text-left">
+          <div className="mb-8 text-center  md:text-left">
             <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">Your Perfect Wedding is waiting</h1>
           </div>
           <form id="LoginForm" onSubmit={submit} className="space-y-4">
