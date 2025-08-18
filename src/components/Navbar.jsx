@@ -59,6 +59,76 @@ try{
     </div>
   );
 
+//   const [isListening, setIsListening] = useState(false);
+//   const [transcript, setTranscript] = useState("");
+//   const [recognition, setRecognition] = useState(null);
+
+//   const actionsMap = {
+//   open_venue: () => Navigate("GROUP-PROJECT-1/VenuePage"),
+//   open_home: () => Navigate("/WeddingCategories"),
+//   set_location: (value) => {
+//     localStorage.setItem("userLocation", value);
+//     alert(`Location set to ${value}`);
+//   },
+//   unknown: () => alert("❌ Sorry, I didn’t understand that."),
+// };
+
+//   useEffect(() => {
+//     const SpeechRecognition =
+//       window.SpeechRecognition || window.webkitSpeechRecognition;
+
+//     if (SpeechRecognition) {
+//       const recog = new SpeechRecognition();
+//       recog.continuous = false;
+//       recog.interimResults = false;
+//       recog.lang = "en-US";
+
+//       recog.onresult = (event) => {
+//         const speechText = event.results[0][0].transcript;
+//         setTranscript(speechText);
+//         handleCommand(speechText);
+//       };
+
+//       recog.onerror = (event) => {
+//         console.error("Speech recognition error:", event.error);
+//       };
+
+//       setRecognition(recog);
+//     }
+//   }, []);
+
+//   const handleCommand = async (spokenText) => {
+//     try {
+//       const res = await fetch("http://localhost:5000/", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ query: spokenText }),
+//       });
+
+//       const { command } = await res.json();
+//       const action = JSON.parse(command);
+
+//       if (actionsMap[action.action]) {
+//         actionsMap[action.action](action.value);
+//       } else {
+//         actionsMap["unknown"]();
+//       }
+//     } catch (err) {
+//       console.error("Error processing command:", err);
+//     }
+//   };
+
+//   const toggleListening = () => {
+//     if (isListening) {
+//       recognition.stop();
+//       setIsListening(false);
+//     } else {
+//       recognition.start();
+//       setIsListening(true);
+//     }
+//   }
+
+
   return (
   
   <>
@@ -118,6 +188,13 @@ try{
                 className="w-80 pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-gray-50/50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 transition-all duration-300"
               />
             </div>
+         {/* <button
+  onClick={toggleListening}
+  className="px-4 py-2 rounded-lg bg-pink-600 text-white"
+>
+  {isListening ? "Stop 🎤" : "Speak 🎙️"}
+</button>
+{transcript && <p className="text-gray-600">You said: {transcript}</p>} */}
 
             {/* Favorites Button */}
             <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
