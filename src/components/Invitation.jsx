@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import { Star, MapPin, Heart, Filter, ChevronDown, Eye, Palette, Image, Clock, Sparkles, Download, Edit3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+
 function WeddingInvitations() {
   const [invitations, setInvitations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ function WeddingInvitations() {
   }, []);
 
   const redirect = (id) => {
-    navigate(`/InvitationInnerPage/:${id}`);
+    navigate(`/InviteInnerPage/:${id}`);
     window.scroll(0, 0);
   }
 

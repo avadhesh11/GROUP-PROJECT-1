@@ -25,11 +25,7 @@ function FoodDetail() {
   console.log("cleanid:", cleanid);
 
   useEffect(() => {
-    if (!cleanid) {
-      setError('Food ID not provided');
-      setLoading(false);
-      return;
-    }
+    
     
     axios.get(`http://localhost:5000/api/foods/${cleanid}`)
       .then(res => {

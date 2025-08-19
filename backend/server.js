@@ -13,7 +13,7 @@ import foods from "./routes/food.js";
 import photography from "./routes/photography.js";
 import music from "./routes/music.js";
 import invitation from "./routes/invitation.js";
-
+import voicerecog from "./routes/voice.js";
 
 dotenv.config();
 const app=express();
@@ -35,6 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/login",login);
+app.use("/ask",voicerecog);
 app.use("/auth",auth);
 app.use("/api/venues",venue);
 app.use("/api/categories",categories);
@@ -44,6 +45,10 @@ app.use("/api/photography", photography);
 app.use("/api/music", music);
 app.use("/api/invitation", invitation);
 
+app.use((err, req, res, next) => {
+  console.error("🔥 Error:", err.stack);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 app.listen(PORT,() =>{
   console.log(`Server running on http://localhost:${PORT}`);

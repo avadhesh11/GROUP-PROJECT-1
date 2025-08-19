@@ -1,48 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Star, Share2, Globe, Image, MapPin, Users, Bed, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, Download, Eye, FileText, Palette, Clock, CheckCircle, Award, Sparkles } from 'lucide-react';
+import axios from "axios";
+import Navbar from './Navbar';
+import { Heart, Star,   Share2,   Download,Eye, ArrowLeft, Palette, Clock,Edit3, Image,   Users,  MapPin, Send, Phone,  MessageCircle,Sparkles,FileText, Play,ZoomIn}from 'lucide-react';
+import { useParams } from "react-router-dom";
 
-function InvitationDetail() {
+function InvitationInnerPage() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
   const [invitationData, setInvitationData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedPackage, setSelectedPackage] = useState('basic');
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     eventDate: '',
-    eventType: 'wedding',
-    quantity: '100',
-    customizationLevel: 'basic',
-    specialRequests: ''
+    eventType: '',
+    guestCount: '',
+    specialRequirements: ''
   });
 
-  // Mock data for demonstration
-  const mockInvitationData = {
-    _id: '12345',
-    title: 'Elegant Rose Gold Wedding Invitation',
-    designer: 'Priya Designs',
-    category: 'Modern',
-    price: 2500,
-    rating: 4.8,
-    reviews: 156,
-    designs: 8,
-    deliveryTime: '24 hours',
-    format: 'Digital + Print',
-    image: '/api/placeholder/800/600',
-    description: 'A stunning modern wedding invitation featuring elegant rose gold accents, sophisticated typography, and beautiful floral elements. Perfect for contemporary couples looking for a blend of elegance and romance.'
-  };
+  const { id } = useParams();
+  const cleanid = id.replace(":", "");
+   console.log("id:", id);
+  console.log("cleanid:", cleanid);
 
   useEffect(() => {
-    // Simulate API call with mock data
-    setTimeout(() => {
-      setInvitationData(mockInvitationData);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  
+    axios.get(`http://localhost:5000/api/invitation/${cleanid}`)
+      .then(res => {
+        console.log(res.data);
+        setLoading(false);
+        setInvitationData(res.data);
+      })
+      .catch(err => {
+        setLoading(false);
+        console.error("Error fetching invitation details:", err);
+        setError('Failed to load invitation details');
+      });
+  }, [cleanid]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,46 +50,60 @@ function InvitationDetail() {
     }));
   };
 
-  const handleShortlist = () => {
-    setIsShortlisted(!isShortlisted);
-    // In a real app, this would make an API call without localStorage
-    console.log('Shortlist status changed:', !isShortlisted);
+  const handleShortlist = async () => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/invitation/${invitationData._id}/shortlist`, {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      
+      if (response.status === 200) {
+        setIsShortlisted(!isShortlisted);
+      }
+    } catch (err) {
+      console.error('Error updating shortlist:', err);
+      setIsShortlisted(!isShortlisted);
+    }
   };
 
-  const handleSubmitEnquiry = () => {
-    if (!formData.fullName || !formData.phone || !formData.email || !formData.quantity) {
+  const handleSubmitEnquiry = async () => {
+    if (!formData.fullName || !formData.phone || !formData.email) {
       alert('Please fill in all required fields');
       return;
     }
 
-    // In a real app, this would make an API call
-    console.log('Enquiry submitted:', {
-      invitationId: invitationData._id,
-      designerName: invitationData.designer,
-      invitationTitle: invitationData.title,
-      selectedPackage,
-      ...formData,
-      phoneCode
-    });
-    
-    alert('Enquiry submitted successfully!');
-    setFormData({
-      fullName: '',
-      phone: '',
-      email: '',
-      eventDate: '',
-      eventType: 'wedding',
-      quantity: '100',
-      customizationLevel: 'basic',
-      specialRequests: ''
-    });
+    try {
+      const response = await axios.post('http://localhost:5000/api/invitation-enquiries', {
+        invitationId: invitationData._id,
+        invitationTitle: invitationData.title,
+        ...formData,
+        phoneCode
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        alert('Enquiry submitted successfully!');
+        setFormData({
+          fullName: '',
+          phone: '',
+          email: '',
+          eventDate: '',
+          eventType: '',
+          guestCount: '',
+          specialRequirements: ''
+        });
+      }
+    } catch (err) {
+      console.error('Error submitting enquiry:', err);
+      alert('Failed to submit enquiry. Please try again.');
+    }
   };
 
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
         title: invitationData.title,
-        text: `Check out this beautiful wedding invitation design: ${invitationData.title}`,
+        text: `Check out this beautiful wedding invitation: ${invitationData.title}`,
         url: window.location.href
       });
     } else {
@@ -111,43 +123,14 @@ function InvitationDetail() {
     { code: '+92', country: 'Pakistan' }
   ];
 
-  const packages = {
-    basic: {
-      name: 'Basic Digital',
-      price: invitationData?.price || 1500,
-      features: ['Digital invitation only', 'Basic customization', '2 design revisions', 'Standard delivery'],
-      delivery: '12 hours'
-    },
-    premium: {
-      name: 'Premium Digital + Print',
-      price: (invitationData?.price || 1500) + 1000,
-      features: ['Digital + Print ready files', 'Advanced customization', '5 design revisions', 'Priority support'],
-      delivery: '24 hours'
-    },
-    luxury: {
-      name: 'Luxury Complete Suite',
-      price: (invitationData?.price || 1500) + 2500,
-      features: ['Complete wedding suite', 'Unlimited revisions', 'Video invitation', 'Personal designer'],
-      delivery: '48 hours'
-    }
-  };
-
-  const sampleDesigns = [
-    { type: 'Main Invitation', preview: '/api/placeholder/400/500' },
-    { type: 'Save the Date', preview: '/api/placeholder/400/500' },
-    { type: 'RSVP Card', preview: '/api/placeholder/400/500' },
-    { type: 'Menu Card', preview: '/api/placeholder/400/500' },
-    { type: 'Thank You Card', preview: '/api/placeholder/400/500' },
-    { type: 'Program Card', preview: '/api/placeholder/400/500' }
-  ];
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading invitation details...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-400 mx-auto mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-400">Loading invitation details...</p>
           </div>
         </div>
       </div>
@@ -156,14 +139,15 @@ function InvitationDetail() {
 
   if (error && !invitationData) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
-            <p className="text-red-600 text-lg mb-2">Error loading invitation details</p>
-            <p className="text-gray-600">{error}</p>
+            <p className="text-red-500 dark:text-red-400 text-lg mb-2">Error loading invitation details</p>
+            <p className="text-gray-600 dark:text-gray-400">{error}</p>
             <button 
               onClick={() => window.location.reload()} 
-              className="mt-4 px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+              className="mt-4 px-6 py-2 bg-pink-600 hover:bg-pink-700 dark:bg-pink-600 dark:hover:bg-pink-700 text-white rounded-lg transition-colors"
             >
               Try Again
             </button>
@@ -174,29 +158,14 @@ function InvitationDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">Wedding Invitations</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Heart className="w-6 h-6 text-gray-400 hover:text-pink-500 cursor-pointer" />
-              <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
-                <span className="text-sm font-medium text-pink-600">U</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <Navbar />
       
       {/* Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <button 
           onClick={() => window.history.back()}
-          className="flex items-center space-x-2 text-gray-600 hover:text-pink-600 transition-colors mb-6"
+          className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors mb-6"
         >
           <ArrowLeft size={20} />
           <span className="font-medium">Back to Invitations</span>
@@ -208,37 +177,43 @@ function InvitationDetail() {
           {/* Main Content Section */}
           <div className="lg:col-span-2">
             {/* Hero Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl dark:shadow-gray-900/50 group">
               <img 
-                src={invitationData.image || '/api/placeholder/800/600'} 
+                src={invitationData.image || invitationData.images?.[selectedImage]} 
                 alt={invitationData.title}
-                className="w-full h-96 lg:h-[600px] object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-96 lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               
               {/* Invitation Info Overlay */}
               <div className="absolute bottom-6 left-6 text-white">
                 <div className="mb-3">
-                  <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {invitationData.category} Design
+                  <span className="bg-white/10 dark:bg-white/10 backdrop-blur-sm border border-white/20 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                    <Palette size={14} className="mr-1" />
+                    {invitationData.category}
                   </span>
                 </div>
                 <h1 className="text-3xl lg:text-4xl font-bold mb-2">{invitationData.title}</h1>
                 <div className="flex items-center space-x-4 text-lg mb-3">
                   <div className="flex items-center">
-                    <Palette size={18} className="mr-2" />
                     <span className="text-gray-200">by {invitationData.designer}</span>
                   </div>
+                  {invitationData.location && (
+                    <div className="flex items-center">
+                      <MapPin size={18} className="mr-2" />
+                      <span className="text-gray-200">{invitationData.location}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
+                  <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full">
                     <Star size={16} className="text-yellow-400 fill-current mr-1" />
                     <span className="font-semibold">{invitationData.rating}</span>
                     <span className="ml-1 text-sm">({invitationData.reviews} reviews)</span>
                   </div>
-                  <div className="flex items-center bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <Sparkles size={16} className="mr-1" />
-                    <span className="text-sm">Premium Quality</span>
+                  <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full">
+                    <Clock size={16} className="mr-1" />
+                    <span className="text-sm">{invitationData.deliveryTime}</span>
                   </div>
                 </div>
               </div>
@@ -246,11 +221,17 @@ function InvitationDetail() {
               {/* Top Right Actions */}
               <div className="absolute top-6 right-6 flex space-x-3">
                 <button 
+                  onClick={() => setShowPreview(true)}
+                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
+                >
+                  <ZoomIn size={20} className="text-white" />
+                </button>
+                <button 
                   onClick={handleShortlist}
-                  className={`p-3 rounded-full backdrop-blur-sm transition-all duration-300 ${
+                  className={`p-3 rounded-full backdrop-blur-sm border transition-all duration-300 ${
                     isShortlisted 
-                      ? 'bg-red-500/90 hover:bg-red-600/90' 
-                      : 'bg-white/20 hover:bg-white/30'
+                      ? 'bg-red-500/90 hover:bg-red-600/90 border-red-500/50' 
+                      : 'bg-white/10 hover:bg-white/20 border-white/20'
                   }`}
                 >
                   <Heart 
@@ -264,7 +245,7 @@ function InvitationDetail() {
                 </button>
                 <button 
                   onClick={handleShare}
-                  className="p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
+                  className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
                 >
                   <Share2 size={20} className="text-white" />
                 </button>
@@ -272,194 +253,123 @@ function InvitationDetail() {
             </div>
 
             {/* Action Toolbar */}
-            <div className="mt-6 bg-white rounded-2xl shadow-lg p-4">
+            <div className="mt-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-4 transition-colors duration-300">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-6">
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors group">
-                    <Image size={18} className="text-blue-600 group-hover:scale-110 transition-transform" />
-                    <span className="text-blue-700 font-medium">View Gallery</span>
+                  <button 
+                    onClick={() => setShowPreview(true)}
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/50 hover:bg-blue-100 dark:hover:bg-blue-800/50 border border-blue-200 dark:border-blue-700/50 rounded-xl transition-colors group"
+                  >
+                    <Eye size={18} className="text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform" />
+                    <span className="text-blue-700 dark:text-blue-300 font-medium">Preview</span>
                   </button>
                   
-                  <div className="h-8 w-px bg-gray-200"></div>
+                  <div className="h-8 w-px bg-gray-300 dark:bg-gray-600"></div>
                   
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-green-50 hover:bg-green-100 rounded-xl transition-colors group">
-                    <Download size={18} className="text-green-600 group-hover:scale-110 transition-transform" />
-                    <span className="text-green-700 font-medium">Sample Download</span>
+                  <button className="flex items-center space-x-2 px-4 py-2 bg-green-50 dark:bg-green-900/50 hover:bg-green-100 dark:hover:bg-green-800/50 border border-green-200 dark:border-green-700/50 rounded-xl transition-colors group">
+                    <Download size={18} className="text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform" />
+                    <span className="text-green-700 dark:text-green-300 font-medium">Download Sample</span>
                   </button>
                   
-                  <div className="h-8 w-px bg-gray-200"></div>
+                  <div className="h-8 w-px bg-gray-300 dark:bg-gray-600"></div>
                   
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-gray-50 hover:bg-yellow-50 rounded-xl transition-colors group">
-                    <Star size={18} className="text-gray-600 group-hover:text-yellow-600 group-hover:scale-110 transition-all" />
-                    <span className="text-gray-700 font-medium">Write Review</span>
+                  <button className="flex items-center space-x-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/50 hover:bg-purple-100 dark:hover:bg-purple-800/50 border border-purple-200 dark:border-purple-700/50 rounded-xl transition-colors group">
+                    <Edit3 size={18} className="text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform" />
+                    <span className="text-purple-700 dark:text-purple-300 font-medium">Customize</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Design Details Section */}
-            <div className="mt-6 bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Design Details</h3>
+            {/* Features Section */}
+            <div className="mt-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 transition-colors duration-300">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Invitation Details</h3>
               
               {/* Key Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="text-center p-4 bg-pink-50 rounded-xl">
-                  <FileText size={24} className="mx-auto text-pink-500 mb-2" />
-                  <div className="font-bold text-pink-700">₹{invitationData.price}</div>
-                  <div className="text-sm text-gray-600">Starting Price</div>
+                <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/30 rounded-xl transition-colors duration-300">
+                  <Image size={24} className="mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+                  <div className="font-bold text-blue-700 dark:text-blue-300">{invitationData.designs || invitationData.templates}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Designs</div>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-xl">
-                  <Palette size={24} className="mx-auto text-purple-500 mb-2" />
-                  <div className="font-bold text-purple-700">{invitationData.designs}</div>
-                  <div className="text-sm text-gray-600">Variations</div>
+                <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-700/30 rounded-xl transition-colors duration-300">
+                  <Clock size={24} className="mx-auto text-purple-600 dark:text-purple-400 mb-2" />
+                  <div className="font-bold text-purple-700 dark:text-purple-300">{invitationData.deliveryTime}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Delivery</div>
                 </div>
-                <div className="text-center p-4 bg-yellow-50 rounded-xl">
-                  <Clock size={24} className="mx-auto text-yellow-500 mb-2" />
-                  <div className="font-bold text-yellow-700">{invitationData.deliveryTime}</div>
-                  <div className="text-sm text-gray-600">Delivery</div>
+                <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700/30 rounded-xl transition-colors duration-300">
+                  <Star size={24} className="mx-auto text-yellow-600 dark:text-yellow-400 mb-2" />
+                  <div className="font-bold text-yellow-700 dark:text-yellow-300">{invitationData.rating}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Rating</div>
                 </div>
-                <div className="text-center p-4 bg-green-50 rounded-xl">
-                  <CheckCircle size={24} className="mx-auto text-green-500 mb-2" />
-                  <div className="font-bold text-green-700">{invitationData.format}</div>
-                  <div className="text-sm text-gray-600">Format</div>
+                <div className="text-center p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700/30 rounded-xl transition-colors duration-300">
+                  <FileText size={24} className="mx-auto text-green-600 dark:text-green-400 mb-2" />
+                  <div className="font-bold text-green-700 dark:text-green-300">{invitationData.format || 'Digital'}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Format</div>
                 </div>
               </div>
 
-              {/* Design Features */}
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Design Features</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {[
-                    'High Resolution Graphics',
-                    'Print Ready Files',
-                    'Multiple Formats',
-                    'Color Variations',
-                    'Font Customization',
-                    'Layout Flexibility',
-                    'Premium Typography',
-                    'Professional Design',
-                    'Quick Turnaround'
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                      <div className="w-2 h-2 bg-pink-500 rounded-full mr-3"></div>
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
+              {/* Features */}
+              <div className="mb-6">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Features</h4>
+                <div className="flex flex-wrap gap-2">
+                  {invitationData.customizable && (
+                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 border border-purple-200 dark:border-purple-700/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium flex items-center">
+                      <Edit3 size={12} className="mr-1" />
+                      Customizable
+                    </span>
+                  )}
+                  {invitationData.digitalOnly && (
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-700/50 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium flex items-center">
+                      <Download size={12} className="mr-1" />
+                      Digital Only
+                    </span>
+                  )}
+                  <span className="px-3 py-1 bg-pink-100 dark:bg-pink-900/50 border border-pink-200 dark:border-pink-700/50 text-pink-700 dark:text-pink-300 rounded-full text-sm font-medium flex items-center">
+                    <Sparkles size={12} className="mr-1" />
+                    Premium Quality
+                  </span>
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 border border-green-200 dark:border-green-700/50 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
+                    Multiple Formats
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Sample Designs Gallery */}
-            <div className="mt-6 bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Complete Suite Preview</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {sampleDesigns.map((design, index) => (
-                  <div key={index} className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                    <img 
-                      src={design.preview || '/api/placeholder/300/400'} 
-                      alt={design.type}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h4 className="font-semibold mb-1">{design.type}</h4>
-                      <button className="flex items-center text-sm bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full hover:bg-white/30 transition-colors">
-                        <Eye size={14} className="mr-1" />
-                        Preview
-                      </button>
-                    </div>
-                  </div>
-                ))}
+            {/* Description */}
+            {invitationData.description && (
+              <div className="mt-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">About This Collection</h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{invitationData.description}</p>
               </div>
-              <div className="mt-4 text-center">
-                <p className="text-sm text-gray-600">*Complete wedding suite includes all shown designs</p>
-              </div>
-            </div>
-
-            {/* About Designer Section */}
-            <div className="mt-6 bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">About the Designer</h3>
-              <div className="flex items-start space-x-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                  {invitationData.designer?.charAt(0)}
-                </div>
-                <div className="flex-1">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{invitationData.designer}</h4>
-                  <p className="text-gray-700 leading-relaxed mb-4">
-                    Professional wedding invitation designer specializing in {invitationData.category.toLowerCase()} styles. 
-                    With years of experience creating beautiful, memorable invitations that perfectly capture the essence 
-                    of your special day. Every design is crafted with attention to detail and personalized touches.
-                  </p>
-                  <div className="flex items-center space-x-6 text-sm text-gray-600">
-                    <div className="flex items-center">
-                      <Award size={16} className="mr-1 text-yellow-500" />
-                      <span>Premium Designer</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Users size={16} className="mr-1 text-blue-500" />
-                      <span>500+ Happy Clients</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Star size={16} className="mr-1 text-yellow-500 fill-current" />
-                      <span>{invitationData.rating} Rating</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
-          {/* Booking Panel */}
+          {/* Detail Panel */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
-              {/* Package Selection */}
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg dark:shadow-gray-900/50 p-6 sticky top-24 transition-colors duration-300">
+              {/* Pricing Section */}
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
                   <span className="w-2 h-6 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full mr-3"></span>
-                  Choose Package
+                  Pricing
                 </h3>
-                
-                <div className="space-y-3">
-                  {Object.entries(packages).map(([key, pkg]) => (
-                    <div 
-                      key={key}
-                      onClick={() => setSelectedPackage(key)}
-                      className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 ${
-                        selectedPackage === key 
-                          ? 'border-pink-500 bg-pink-50' 
-                          : 'border-gray-200 hover:border-pink-300 hover:bg-pink-25'
-                      }`}
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className={`font-semibold ${selectedPackage === key ? 'text-pink-700' : 'text-gray-900'}`}>
-                          {pkg.name}
-                        </h4>
-                        <span className={`text-xl font-bold ${selectedPackage === key ? 'text-pink-800' : 'text-gray-800'}`}>
-                          ₹{pkg.price.toLocaleString()}
-                        </span>
-                      </div>
-                      <ul className="space-y-1 mb-2">
-                        {pkg.features.map((feature, index) => (
-                          <li key={index} className="flex items-center text-sm text-gray-600">
-                            <CheckCircle size={12} className="text-green-500 mr-2" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Clock size={12} className="mr-1" />
-                        <span>Delivery in {pkg.delivery}</span>
-                      </div>
+                <div className="space-y-3 mb-4">
+                  <div className="text-center p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/30 dark:to-purple-900/30 border border-pink-200 dark:border-pink-700/30 rounded-xl transition-colors duration-300">
+                    <div className="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-1">
+                      ₹{parseInt(invitationData.price).toLocaleString()}
                     </div>
-                  ))}
+                    <div className="text-sm text-gray-600 dark:text-gray-400">starting price</div>
+                    <div className="text-xs text-pink-600 dark:text-pink-400 font-medium mt-1">Complete invitation suite</div>
+                  </div>
                 </div>
               </div>
 
-              {/* Booking Form */}
+              {/* Contact Form */}
               <div className="space-y-4">
-                <h4 className="text-lg font-bold text-gray-900 flex items-center">
-                  <MessageCircle size={18} className="mr-2 text-pink-600" />
-                  Get Custom Quote
+                <h4 className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                  <MessageCircle size={18} className="mr-2 text-green-600 dark:text-green-400" />
+                  Get Quote
                 </h4>
                 
                 <input
@@ -468,18 +378,18 @@ function InvitationDetail() {
                   placeholder="Full Name *"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                   required
                 />
 
                 <div className="flex space-x-2">
                   <select
-                    className="px-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                    className="px-3 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                     value={phoneCode}
                     onChange={(e) => setPhoneCode(e.target.value)}
                   >
                     {countryCodes.map((country) => (
-                      <option key={country.code} value={country.code}>
+                      <option key={country.code} value={country.code} className="bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white">
                         {country.country} {country.code}
                       </option>
                     ))}
@@ -491,7 +401,7 @@ function InvitationDetail() {
                     placeholder="Phone number *"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                    className="flex-1 px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                     required
                   />
                 </div>
@@ -502,7 +412,7 @@ function InvitationDetail() {
                   placeholder="Email Address *"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                   required
                 />
 
@@ -511,7 +421,7 @@ function InvitationDetail() {
                   name="eventDate"
                   value={formData.eventDate}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all [color-scheme:dark]"
                 />
 
                 <div className="grid grid-cols-2 gap-3">
@@ -519,83 +429,83 @@ function InvitationDetail() {
                     name="eventType"
                     value={formData.eventType}
                     onChange={handleInputChange}
-                    className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                   >
-                    <option value="wedding">Wedding</option>
-                    <option value="engagement">Engagement</option>
-                    <option value="anniversary">Anniversary</option>
-                    <option value="reception">Reception</option>
+                    <option value="">Event Type</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Engagement">Engagement</option>
+                    <option value="Reception">Reception</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Birthday">Birthday</option>
                   </select>
-                  
                   <div className="relative">
+                    <Users size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400" />
                     <input
                       type="number"
-                      name="quantity"
-                      placeholder="Quantity *"
-                      value={formData.quantity}
+                      name="guestCount"
+                      placeholder="Guests"
+                      value={formData.guestCount}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
-                      required
+                      className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
                     />
                   </div>
                 </div>
 
-                <select
-                  name="customizationLevel"
-                  value={formData.customizationLevel}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
-                >
-                  <option value="basic">Basic Customization</option>
-                  <option value="moderate">Moderate Changes</option>
-                  <option value="extensive">Extensive Customization</option>
-                  <option value="complete">Complete Custom Design</option>
-                </select>
-
                 <textarea
-                  name="specialRequests"
-                  placeholder="Special requests, color preferences, text details..."
-                  value={formData.specialRequests}
+                  name="specialRequirements"
+                  placeholder="Special requirements or customization details..."
+                  value={formData.specialRequirements}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all h-20 resize-none"
+                  rows={3}
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all resize-none"
                 />
 
                 <div className="flex space-x-3 mt-6">
                   <button 
                     onClick={handleSubmitEnquiry}
-                    className="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center group"
+                    className="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-600 dark:to-purple-700 text-white py-3 rounded-xl font-semibold hover:from-pink-700 hover:to-purple-700 dark:hover:from-pink-700 dark:hover:to-purple-800 transition-all duration-300 shadow-md hover:shadow-lg dark:shadow-gray-900/50 flex items-center justify-center group"
                   >
                     <Send size={16} className="mr-2 group-hover:translate-x-1 transition-transform" />
-                    Get Quote
+                    Send Enquiry
                   </button>
                   <button 
                     onClick={() => window.open(`tel:${phoneCode}1234567890`)}
-                    className="px-6 py-3 border-2 border-pink-500 text-pink-600 rounded-xl font-semibold hover:bg-pink-50 transition-all duration-300 flex items-center justify-center group"
+                    className="px-6 py-3 border-2 border-pink-500 dark:border-pink-400 text-pink-600 dark:text-pink-400 rounded-xl font-semibold hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:border-pink-600 dark:hover:border-pink-300 transition-all duration-300 flex items-center justify-center group"
                   >
                     <Phone size={16} className="group-hover:scale-110 transition-transform" />
                   </button>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="pt-4 border-t border-gray-200">
-                  <div className="grid grid-cols-2 gap-3">
-                    <button className="flex items-center justify-center space-x-2 py-2 px-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
-                      <Download size={14} className="text-blue-600" />
-                      <span className="text-sm text-blue-700">Sample</span>
-                    </button>
-                    <button className="flex items-center justify-center space-x-2 py-2 px-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
-                      <Eye size={14} className="text-green-600" />
-                      <span className="text-sm text-green-700">Preview</span>
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Preview: {invitationData.title}</h3>
+              <button 
+                onClick={() => setShowPreview(false)}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <X size={20} className="text-gray-600 dark:text-gray-400" />
+              </button>
+            </div>
+            <div className="p-6">
+              <img 
+                src={invitationData.image} 
+                alt={invitationData.title}
+                className="w-full h-auto max-h-[60vh] object-contain rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-export default InvitationDetail;
+export default InvitationInnerPage;
