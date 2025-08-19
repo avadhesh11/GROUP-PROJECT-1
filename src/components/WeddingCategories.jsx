@@ -34,7 +34,7 @@ function WeddingCategories() {
     return (
       <div 
         onClick={redirect}
-        className="group cursor-pointer relative overflow-hidden rounded-2xl bg-white border border-gray-200 hover:border-pink-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105"
+        className="group dark:bg-gray-800   cursor-pointer relative overflow-hidden rounded-2xl bg-white border border-gray-200 hover:border-pink-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105"
       >
         {/* Background Image with Overlay */}
         <div className="relative h-48 overflow-hidden">
@@ -54,7 +54,7 @@ function WeddingCategories() {
         {/* Content */}
         <div className="p-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">
+            <h3 className="text-xl dark:text-white font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">
               {title}
             </h3>
             <ChevronRight size={20} className="text-gray-400 group-hover:text-pink-500 group-hover:translate-x-1 transition-all duration-300" />
@@ -80,7 +80,7 @@ function WeddingCategories() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="dark:bg-gray-900 min-h-screen bg-gray-50">
         <Navbar />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
@@ -90,9 +90,9 @@ function WeddingCategories() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
+    <div className="min-h-screen dark:bg-gray-900 bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       <Navbar />
-      
+      <div className="dark:bg-gray-900">
       {/* Hero Section */}
       {/* <div className="relative bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -124,11 +124,11 @@ function WeddingCategories() {
       <div className="relative text-white w-full h-screen">
   {/* Background Video */}
  <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
-  <source src="/GROUP-PROJECT-1/video.mp4" type="video/mp4" />
+  <source src="/GROUP-PROJECT-1/video.mp4" alt="unable to load video" type="video/mp4" />
 </video>
 
   {/* Optional overlay for better contrast */}
-  <div className="absolute inset-0 bg-black/40"></div>
+  <div className="absolute  inset-0 bg-black/40"></div>
 
   {/* Content */}
   <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -139,7 +139,7 @@ function WeddingCategories() {
       <p className="text-xl md:text-2xl text-pink-100 mb-8 max-w-3xl mx-auto">
         Plan the perfect celebration with our comprehensive wedding services
       </p>
-      <div className="flex items-center justify-center space-x-8 text-pink-200">
+      <div className="flex dark:bg-gray-900 items-center justify-center space-x-8 text-pink-200">
         {/* Your buttons or icons */}
       </div>
     </div>
@@ -148,17 +148,17 @@ function WeddingCategories() {
 
 
       {/* Categories Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl dark:text-white md:text-4xl font-bold text-gray-900 mb-4">
             Wedding Categories
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-[180%] dark:text-white text-gray-600 ">
             Discover everything you need to make your special day unforgettable
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => (
             <Categories_card key={category._id} {...category} />
           ))}
@@ -166,7 +166,7 @@ function WeddingCategories() {
       </div>
 
       {/* Call to Action Section */}
-      <div className="bg-white">
+      <div className=" dark:bg-gray-900 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center text-white">
             <h3 className="text-2xl md:text-2xl font-bold mb-4">
@@ -185,6 +185,7 @@ function WeddingCategories() {
             </button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

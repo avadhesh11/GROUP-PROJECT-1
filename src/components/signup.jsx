@@ -86,6 +86,7 @@ function Sign() {
       if (response.ok) {
         alert("user registered succesfully");
         setvendor(true);
+        navigate("/Vendor");
 
         console.log(Data);
       } else {
@@ -126,7 +127,7 @@ function Sign() {
         navigate("/WeddingCategories");
       } else {
         settoken(token);
-        setvendor(true);
+        navigate("/Vendor")
       }
     } catch (err) {
       console.error("error:", err);
@@ -149,13 +150,7 @@ function Sign() {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 py-6 px-2">
-      {askvendor ? (
-        <div className="vendor">
-          <h1>Are you a vendor?</h1>
-          <button>YES</button>
-          <button onClick={() => set(token)}>NO</button>
-        </div>
-      ) : (
+    
         <div className="w-full  max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
           {/* Left: Form */}
           <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12 ">
@@ -270,7 +265,7 @@ function Sign() {
             />
           </div>
         </div>
-      )}
+      
     </div>
   );
 }
