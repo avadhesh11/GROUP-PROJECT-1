@@ -10,10 +10,21 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
  const[profile,setprofile]=useState(false);
+ const [location,setlocation]=useState("Ahmedabad");
  const {theme,toggleTheme}=useTheme();
   const hamburger = () => {
     setOpen(!open);
+
   };
+  function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+  const locationchange=(e)=>{
+     const newLocation = e.value;   // get value from event
+  setlocation(newLocation);      // update state
+
+  document.cookie = `location=${newLocation}; path=/; max-age=86400`; 
+  }
 const Navigate=useNavigate();
 
   useEffect(() => {
@@ -35,7 +46,7 @@ try{
     method:"POST",
     credentials:"include"
   })
-  localStorage.clear();
+  deleteCookie("refreshToken");
   window.location.reload();
 
 }catch(err){
@@ -134,7 +145,7 @@ try{
   
   <>
     {/* Main Navbar */}
-    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700 shadow-sm transition-colors duration-300">
+    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-950 backdrop-blur-lg border-b border-gray-200/50 dark:border-gray-700 shadow-sm transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
@@ -165,7 +176,7 @@ try{
             {/* Location Selector */}
             <select
               className="px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300 text-gray-700 dark:text-gray-200"
-              defaultValue="Ahmedabad"
+              defaultValue="Ahmedabad" 
             >
               <option value="" disabled>
                 Select Location

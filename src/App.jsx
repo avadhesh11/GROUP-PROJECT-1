@@ -18,6 +18,7 @@ import PhotoInnerPage from "./components/InnerPhoto.jsx";
 import FoodInnerPage from "./components/InnerFood.jsx";
 import InviteInnerPage from "./components/InnerInvitation.jsx";
 import Profile from "./components/profile.jsx";
+import Vendor from "./components/Vendorpage.jsx"
 import { ThemeProvider } from "./context/themecontext.jsx";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
     <ThemeProvider>
   
       <Routes>
-      
+       <Route path="/Vendor" element={<Vendor />} />
         <Route path="/" element={<WeddingCategories />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign" element={<Sign />} />
@@ -38,7 +39,7 @@ function App() {
         <Route path="/MusicPage" element={<MusicPage />} />
         <Route path="/PhotographyPage" element={<PhotographyPage />} />
         <Route path="/InvitationPage" element={<InvitationPage />} />
-
+       
            <Route path="/VenueInnerPage/:id" element={<VenueInnerPage />} />
           <Route path="/MusicInnerPage/:id" element={<MusicInnerPage />} />
            <Route path="/PhotoInnerPage/:id" element={<PhotoInnerPage />} />
@@ -49,7 +50,7 @@ function App() {
           <Route path="/Profile" element={<Profile />} />
        </Routes>
        </ThemeProvider>
-      <div className="h-[10vh]"/>
+      <div className="dark:bg-gray-900 h-[10vh]"/>
       <Footer/>
     </>
   );
