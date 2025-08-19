@@ -10,10 +10,17 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
  const[profile,setprofile]=useState(false);
+ const [location,setlocation]=useState("Ahmedabad");
  const {theme,toggleTheme}=useTheme();
   const hamburger = () => {
     setOpen(!open);
   };
+  const locationchange=(e)=>{
+     const newLocation = e.value;   // get value from event
+  setlocation(newLocation);      // update state
+
+  document.cookie = `location=${newLocation}; path=/; max-age=86400`; 
+  }
 const Navigate=useNavigate();
 
   useEffect(() => {
@@ -164,7 +171,7 @@ try{
             {/* Location Selector */}
             <select
               className="px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300 text-gray-700 dark:text-gray-200"
-              defaultValue="Ahmedabad"
+              defaultValue="Ahmedabad" 
             >
               <option value="" disabled>
                 Select Location

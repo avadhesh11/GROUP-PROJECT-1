@@ -60,6 +60,9 @@ function Sign() {
         console.log(Data);
       } else {
         alert(Data.error);
+        setloading(false);
+        navigate('/login');
+        
         console.error(Data);
       }
     } catch (err) {
@@ -87,6 +90,7 @@ function Sign() {
         console.log(Data);
       } else {
         alert(Data.error);
+   
         console.error(Data);
       }
     } catch (err) {
