@@ -3,14 +3,14 @@ import Navbar from './Navbar';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Heart, Star, MapPin, Calendar } from 'lucide-react';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 function WeddingCategories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/categories")
+    axios.get(`${BACKEND_URL}/api/categories`)
       .then((response) => {
         console.log("Fetched categories:", response.data);
         setCategories(response.data);

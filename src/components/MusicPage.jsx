@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Music, Heart, Filter, ChevronDown, Play, Users, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function MusicAndDance() {
   const [performers, setPerformers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function MusicAndDance() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/music")
+    axios.get(`${BACKEND_URL}/api/music`)
       .then((response) => {
         setPerformers(response.data);
         setLoading(false);

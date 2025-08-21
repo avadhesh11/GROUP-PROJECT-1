@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Camera, Heart, Filter, ChevronDown, Play, Image, Award, Clock, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function Photography() {
   const [photographers, setPhotographers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function Photography() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/photography")
+    axios.get(`${BACKEND_URL}/api/photography`)
       .then(response => {
         setPhotographers(response.data);
         setLoading(false);

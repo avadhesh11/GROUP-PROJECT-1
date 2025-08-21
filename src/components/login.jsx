@@ -4,6 +4,7 @@ import img from '../assets/couple.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, GoogleAuthProvider ,signInWithPopup} from "firebase/auth";
 import {app} from "../firebase";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 import  './common.css';
 const auth =getAuth(app);
 const googleprovider=new GoogleAuthProvider();
@@ -28,7 +29,7 @@ function Login() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch(`${BACKEND_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ async function signwithgoogle(){
   try{
     const check=await signInWithPopup(auth,googleprovider);
     const token=await check.user.getIdToken();
-    await fetch("http://localhost:5000/login/set-cookie", {
+    await fetch(`${BACKEND_URL}/login/set-cookie`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", 

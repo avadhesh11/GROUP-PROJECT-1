@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 const Vendor = () => {
   const navigate=useNavigate();
   const [isVendor, setIsVendor] = useState(null);
@@ -10,13 +10,21 @@ const Vendor = () => {
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
+  const onsubmit=()=>{
+    if(details && category){
+      alert("Your details have been saved! Our team will contact you soon for more details and verification");
+    }
+    else{
+      alert("All details are necessary!!")
+    }
+  }
 
   const categories = {
-    Venue: ["Name", "Capacity", "Location", "Price per Day"],
-    Catering: ["Business Name", "Cuisine Type", "Per Plate Cost", "Contact"],
-    Photography: ["Studio Name", "Experience (years)", "Package Price", "Contact"],
-    Decoration: ["Company Name", "Theme Specialty", "Budget Range", "Contact"],
-    Music: ["Band/DJ Name", "Genre", "Price", "Contact"],
+    Venue: ["Name", "Capacity", "Location", "Price per Day","Contact"],
+    Catering: ["Business Name","Location", "Cuisine Type", "Per Plate Cost", "Contact"],
+    Photography: ["Studio Name","Location", "Experience (years)", "Package Price", "Contact"],
+    Decoration: ["Company Name","Location", "Theme Specialty", "Budget Range", "Contact"],
+    Music: ["Band/DJ Name", "Location","Genre", "Price", "Contact"],
   };
 
   return (
@@ -59,7 +67,7 @@ const Vendor = () => {
             >
               <option value="">-- Choose a Category --</option>
               {Object.keys(categories).map((cat) => (
-                <option key={cat} value={cat}>
+                <option key={cat} required value={cat}>
                   {cat}
                 </option>
               ))}
@@ -75,6 +83,7 @@ const Vendor = () => {
                     <input
                       type="text"
                       name={field}
+                      required
                       value={details[field] || ""}
                       onChange={handleChange}
                       placeholder={`Enter ${field}`}
@@ -85,6 +94,7 @@ const Vendor = () => {
 
                 <button
                   type="submit"
+                 
                   className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
                 >
                   Submit

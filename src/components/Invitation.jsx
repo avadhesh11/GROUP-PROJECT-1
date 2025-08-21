@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Heart, Filter, ChevronDown, Eye, Palette, Image, Clock, Sparkles, Download, Edit3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 function WeddingInvitations() {
   const [invitations, setInvitations] = useState([]);
@@ -13,7 +13,7 @@ function WeddingInvitations() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/invitation")
+    axios.get(`${BACKEND_URL}/api/invitation`)
       .then((response) => {
         setInvitations(response.data);
         setLoading(false);

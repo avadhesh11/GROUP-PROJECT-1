@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-blue-950 dark:from-pink-700 dark:via-purple-800 dark:to-indigo-900 text-white mt-12">
+    <footer className="bg-blue-950 dark:bg-gray-800 dark:from-pink-700 dark:via-purple-800 dark:to-indigo-900 text-white mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           
@@ -102,17 +102,6 @@ function Footer() {
       <Youtube size={20} />
     </a>
   </div>
-
-  <div className="flex items-center space-x-4 mt-6">
-  <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12 hover:scale-105 transition-transform"/>
-  </a>
-
-  <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
-    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" className="h-12 hover:scale-105 transition-transform"
-/>
-  </a>
-</div>
 
 </div>
  </div>

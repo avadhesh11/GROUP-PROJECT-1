@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Palette, Heart, Filter, ChevronDown, Eye, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 function ThemePage() {
   const [themes, setThemes] = useState([]);
@@ -11,7 +12,7 @@ function ThemePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/themes")
+    axios.get(`${BACKEND_URL}/api/themes`)
       .then((response) => {
         setThemes(response.data);
         setLoading(false);

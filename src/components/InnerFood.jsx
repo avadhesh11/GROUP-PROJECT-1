@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star, Share2, Globe, Image, MapPin, Users, Utensils, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, ChefHat, Clock, Award } from 'lucide-react';
 import { useParams } from "react-router-dom";
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function FoodDetail() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
@@ -27,7 +27,7 @@ function FoodDetail() {
   useEffect(() => {
     
     
-    axios.get(`http://localhost:5000/api/foods/${cleanid}`)
+    axios.get(`${BACKEND_URL}/api/foods/${cleanid}`)
       .then(res => {
         console.log(res.data)
         setLoading(false);
@@ -50,7 +50,7 @@ function FoodDetail() {
 
   const handleShortlist = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/foods/${foodData._id}/shortlist`, {}, {
+      const response = await axios.post(`${BACKEND_URL}/api/foods/${foodData._id}/shortlist`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -73,7 +73,7 @@ function FoodDetail() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/food-enquiries', {
+      const response = await axios.post(`${BACKEND_URL}/api/food-enquiries`, {
         foodId: foodData._id,
         catererName: foodData.title,
         ...formData,

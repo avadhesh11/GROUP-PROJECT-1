@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star, Share2, Globe, Image, MapPin, Users, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft, Play, Volume2, Clock, Award, Music } from 'lucide-react';
 import { useParams } from "react-router-dom";
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function MusicInnerPage() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
@@ -33,7 +33,7 @@ function MusicInnerPage() {
       return;
     }
     
-    axios.get(`http://localhost:5000/api/music/${cleanid}`)
+    axios.get(`${BACKEND_URL}/api/music/${cleanid}`)
       .then(res => {
         console.log(res.data)
         setLoading(false);
@@ -56,7 +56,7 @@ function MusicInnerPage() {
 
   const handleShortlist = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/music/${performerData._id}/shortlist`, {}, {
+      const response = await axios.post(`${BACKEND_URL}/api/music/${performerData._id}/shortlist`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -78,7 +78,7 @@ function MusicInnerPage() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/music-enquiries', {
+      const response = await axios.post(`${BACKEND_URL}/api/music-enquiries`, {
         performerId: performerData._id,
         performerName: performerData.title,
         ...formData,

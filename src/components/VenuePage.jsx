@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Users, Bed, Heart, Filter, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function VenuePage() {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function VenuePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/venues")
+    axios.get(`${BACKEND_URL}/api/venues`)
       .then((response) => {
         setVenues(response.data);
         setLoading(false);

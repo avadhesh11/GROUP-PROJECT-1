@@ -6,6 +6,7 @@ import { Menu, X, Search, Heart, User, Pointer } from 'lucide-react';
 import { Moon, Sun } from "lucide-react";
 import { getAuth,signOut } from 'firebase/auth';
 import {useTheme } from "../context/themecontext";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -28,7 +29,7 @@ function Navbar() {
 const Navigate=useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/categories")
+    axios.get(`${BACKEND_URL}/api/categories`)
       .then((response) => {
         console.log("Fetched categories:", response.data);
         setCategories(response.data);
@@ -42,7 +43,7 @@ const Navigate=useNavigate();
     const auth=getAuth();
 try{
   await signOut(auth);
-  await fetch("http://localhost:5000/login/logout",{
+  await fetch(`${BACKEND_URL}/login/logout`,{
     method:"POST",
     credentials:"include"
   })

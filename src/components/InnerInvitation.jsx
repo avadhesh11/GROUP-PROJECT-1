@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star,   Share2,   Download,Eye, ArrowLeft, Palette, Clock,Edit3, Image,   Users,  MapPin, Send, Phone,  MessageCircle,Sparkles,FileText, Play,ZoomIn}from 'lucide-react';
 import { useParams } from "react-router-dom";
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function InvitationInnerPage() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
@@ -29,7 +29,7 @@ function InvitationInnerPage() {
 
   useEffect(() => {
   
-    axios.get(`http://localhost:5000/api/invitation/${cleanid}`)
+    axios.get(`${BACKEND_URL}/api/invitation/${cleanid}`)
       .then(res => {
         console.log(res.data);
         setLoading(false);

@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Star, MapPin, Users, Bed, Heart, Filter, ChevronDown, Utensils } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function FoodPage() {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function FoodPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/foods")
+    axios.get(`${BACKEND_URL}/api/foods`)
       .then((response) => {
         setFoods(response.data);
         setLoading(false);

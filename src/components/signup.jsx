@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import "./common.css";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 const auth = getAuth(app);
 const googleprovider = new GoogleAuthProvider();
 function Sign() {
@@ -44,7 +45,7 @@ function Sign() {
     }
     try {
       setloading(true);
-      const response = await fetch("http://localhost:5000/auth/signup", {
+      const response = await fetch(`${BACKEND_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +75,7 @@ function Sign() {
   const verifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/auth/verify-otp", {
+      const response = await fetch(`${BACKEND_URL}/auth/verify-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +104,7 @@ function Sign() {
     try {
       const check = await signInWithPopup(auth, googleprovider);
 
-      const res = await fetch("http://localhost:5000/auth/glogin", {
+      const res = await fetch(`${BACKEND_URL}/auth/glogin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +119,7 @@ function Sign() {
       const data = await res.json();
       const token = await check.user.getIdToken();
       if (data.message === "Email already exists!") {
-        await fetch("http://localhost:5000/login/set-cookie", {
+        await fetch(`${BACKEND_URL}/login/set-cookie`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -135,7 +136,7 @@ function Sign() {
   }
   const set = async (token) => {
     try {
-      await fetch("http://localhost:5000/login/set-cookie", {
+      await fetch(`${BACKEND_URL}/login/set-cookie`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

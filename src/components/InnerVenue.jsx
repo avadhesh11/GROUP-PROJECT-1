@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from './Navbar';
 import { Heart, Star, Share2, Globe, Image, MapPin, Users, Bed, Calendar, Mail, Phone, Send, MessageCircle, ArrowLeft } from 'lucide-react';
 import { useParams } from "react-router-dom";
-
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 function VenueDetail() {
   const [phoneCode, setPhoneCode] = useState('+91');
   const [isShortlisted, setIsShortlisted] = useState(false);
@@ -31,7 +31,7 @@ console.log("cleanid:",cleanid);
       return;
     }
 
-   axios.get(`http://localhost:5000/api/venues/${cleanid}`)
+   axios.get(`${BACKEND_URL}/api/venues/${cleanid}`)
         .then(res => {
           console.log(res.data)
           setLoading(false);
@@ -55,7 +55,7 @@ console.log("cleanid:",cleanid);
 
   const handleShortlist = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/venues/${venueData._id}/shortlist`, {}, {
+      const response = await axios.post(`${BACKEND_URL}/api/venues/${venueData._id}/shortlist`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -78,7 +78,7 @@ console.log("cleanid:",cleanid);
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/enquiries', {
+      const response = await axios.post(`${BACKEND_URL}/api/enquiries`, {
         venueId: venueData._id,
         venueName: venueData.title,
         ...formData,
