@@ -17,7 +17,7 @@ import voicerecog from "./routes/voice.js";
 
 dotenv.config();
 const app=express();
-const PORT=5000;
+
 const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
