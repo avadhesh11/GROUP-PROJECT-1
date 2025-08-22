@@ -15,9 +15,9 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-      {/* Card */}
+  
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-3xl p-6">
-        {/* Profile Picture */}
+      
         <div className="flex flex-col items-center">
           <img
             src={user.image}
@@ -30,7 +30,7 @@ export default function Profile() {
           <p className="text-gray-500">{user.bio}</p>
         </div>
 
-        {/* Info Section */}
+
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-pink-50 p-4 rounded-lg">
             <h3 className="font-semibold text-gray-700">Email</h3>
@@ -54,7 +54,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-8 flex justify-center gap-4">
           <button className="px-5 py-2 bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600">
             Edit Profile

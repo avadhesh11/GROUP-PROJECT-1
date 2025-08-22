@@ -71,7 +71,7 @@ async function signwithgoogle(){
 
   return (
     <div className="min-h-screen w-full  flex items-center justify-center bg-gray-50 py-6 px-2 ">
-      <div className="w-full max-w-4xl bg-[#F0F0E8] flex flex-col md:flex-row overflow-hidden rounded  ">
+     <div className="w-full  max-w-4xl bg-[#F0F0E8] rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden border border-gray-200">
         <div className="md:w-1/2 w-full flex flex-col justify-center p-8 md:p-12">
           <div className="mb-8 text-center  md:text-left">
             <h1 className="font-cursive text-3xl md:text-4xl font-light mb-2 text-gray-800">Your Perfect Wedding is waiting</h1>
@@ -118,7 +118,7 @@ async function signwithgoogle(){
             </Link>
           </div>
         </div>
-        {/* Right: Image */}
+      
         <div className="md:w-1/2 w-full hidden md:flex items-center justify-center bg-[#F0F0E8] rounded-none border-none p-0 m-0">
           <img src={img} alt="Wedding couple" className="object-cover w-full h-full border-none shadow-none outline-none ring-0 rounded-none p-0 m-0" />
         </div>

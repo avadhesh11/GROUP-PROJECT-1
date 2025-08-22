@@ -21,8 +21,8 @@ function Navbar() {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
   const locationchange=(e)=>{
-     const newLocation = e.value;   // get value from event
-  setlocation(newLocation);      // update state
+     const newLocation = e.value;   
+  setlocation(newLocation);      
 
   document.cookie = `location=${newLocation}; path=/; max-age=86400`; 
   }
@@ -228,7 +228,7 @@ try{
                   {Cookies.get('refreshToken') ? (
                     <>
                       <button
-                        onClick={() => Navigate('/profile')}
+                      
                         className="block px-4 dark:text-white py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         Profile

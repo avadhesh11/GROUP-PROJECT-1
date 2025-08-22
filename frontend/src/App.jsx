@@ -47,7 +47,7 @@ function App() {
            <Route path="/InviteInnerPage/:id" element={<InviteInnerPage />} />
           <Route path="/FoodInnerPage/:id" element={<FoodInnerPage />} />
           
-          <Route path="/Profile" element={<Profile />} />
+          {/* <Route path="/Profile" element={<Profile />} /> */}
        </Routes>
        </ThemeProvider>
       <div className="dark:bg-gray-900 h-[10vh]"/>

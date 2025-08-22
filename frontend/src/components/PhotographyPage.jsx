@@ -37,8 +37,7 @@ function Photography() {
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-        
-        {/* Floating Elements */}
+     
         <div className="absolute top-4 left-4">
           <span className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
             <Camera size={14} className="mr-1" />
@@ -53,22 +52,22 @@ function Photography() {
           <Heart size={18} className="text-white group-hover:text-pink-400 group-hover:fill-current transition-colors" />
         </button>
 
-        {/* Rating Badge */}
+  
         <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1 rounded-full">
           <Star size={14} className="text-yellow-400 fill-current" />
           <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{rating}</span>
           <span className="text-xs text-gray-600 dark:text-gray-400">({review} reviews)</span>
         </div>
 
-        {/* Experience Badge */}
+        
         <div className="absolute bottom-4 right-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full">
           <span className="text-xs font-semibold">{experience}</span>
         </div>
       </div>
 
-      {/* Content Section */}
+
       <div className="p-6">
-        {/* Title and Location */}
+       
         <div className="mb-4">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors line-clamp-1">
             {title}
@@ -78,8 +77,6 @@ function Photography() {
             <span className="text-sm truncate">{location}</span>
           </div>
         </div>
-
-        {/* Pricing Section */}
         <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl border dark:border-gray-700">
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">₹{parseInt(price).toLocaleString()}</div>
@@ -90,7 +87,6 @@ function Photography() {
           </div>
         </div>
 
-        {/* Portfolio Stats */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-1 bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full border dark:border-green-800">
             <Image size={14} className="text-green-500 dark:text-green-400" />
@@ -109,7 +105,7 @@ function Photography() {
           </div>
         </div>
 
-        {/* Additional Details */}
+       
         <div className="flex justify-between items-center mb-4">
           {deliveryTime && (
             <div className="flex items-center space-x-1 bg-orange-50 dark:bg-orange-900/30 px-3 py-1 rounded-full border dark:border-orange-800">
@@ -131,7 +127,7 @@ function Photography() {
           )}
         </div>
 
-        {/* Action Buttons */}
+       
         <div className="flex space-x-3">
           <button 
             onClick={(e) => e.stopPropagation()} 
@@ -154,7 +150,6 @@ function Photography() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Navbar />
 
-      {/* Header Section */}
       <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 dark:from-pink-700 dark:via-purple-800 dark:to-indigo-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
@@ -168,7 +163,7 @@ function Photography() {
         </div>
       </div>
 
-      {/* Filters Section */}
+   
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -226,7 +221,6 @@ function Photography() {
         </div>
       </div>
 
-      {/* Photographers Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

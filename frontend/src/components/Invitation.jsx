@@ -37,7 +37,7 @@ function WeddingInvitations() {
 
   const InvitationCard = ({ id, image, title, rating, reviews, category, price, designs, customizable, format, deliveryTime, designer, location, templates, digitalOnly }) => (
     <div onClick={() => redirect(id)} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-gray-700/50 dark:hover:shadow-gray-600/50 transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-pink-200 dark:hover:border-pink-400 hover:-translate-y-2 cursor-pointer">
-      {/* Image Section */}
+
       <div className="relative h-64 overflow-hidden">
         <img 
           src={image} 
@@ -46,7 +46,7 @@ function WeddingInvitations() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         
-        {/* Floating Elements */}
+       
         <div className="absolute top-4 left-4">
           <span className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
             <Palette size={14} className="mr-1 text-pink-500 dark:text-pink-400" />
@@ -61,7 +61,7 @@ function WeddingInvitations() {
           <Heart size={18} className="text-white group-hover:text-pink-400 group-hover:fill-current transition-colors" />
         </button>
 
-        {/* Preview Button Overlay */}
+      
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button 
             onClick={(e) => e.stopPropagation()} 
@@ -71,14 +71,13 @@ function WeddingInvitations() {
           </button>
         </div>
 
-        {/* Rating Badge */}
+      
         <div className="absolute bottom-4 left-4 flex items-center space-x-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1 rounded-full">
           <Star size={14} className="text-yellow-400 fill-current" />
           <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{rating}</span>
           <span className="text-xs text-gray-600 dark:text-gray-400">({reviews} reviews)</span>
         </div>
 
-        {/* Customizable Badge */}
         {customizable && (
           <div className="absolute bottom-4 right-4 bg-gradient-to-r from-pink-500 to-purple-500 dark:from-pink-600 dark:to-purple-600 text-white px-3 py-1 rounded-full">
             <span className="text-xs font-semibold flex items-center">
@@ -89,9 +88,9 @@ function WeddingInvitations() {
         )}
       </div>
 
-      {/* Content Section */}
+    
       <div className="p-6">
-        {/* Title and Designer/Location */}
+        
         <div className="mb-4">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors line-clamp-1">
             {title}
@@ -107,7 +106,6 @@ function WeddingInvitations() {
           </div>
         </div>
 
-        {/* Pricing Section */}
         <div className="mb-4 p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/30 dark:to-purple-900/30 rounded-xl border dark:border-gray-700">
           <div className="text-center">
             <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">₹{parseInt(price).toLocaleString()}</div>
@@ -116,7 +114,6 @@ function WeddingInvitations() {
           </div>
         </div>
 
-        {/* Details Grid */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-1 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full border dark:border-blue-800">
             <Clock size={14} className="text-blue-500 dark:text-blue-400" />
@@ -135,7 +132,6 @@ function WeddingInvitations() {
           </div>
         </div>
 
-        {/* Features Row */}
         <div className="flex justify-between items-center mb-4">
           {customizable && (
             <div className="flex items-center space-x-1 bg-purple-50 dark:bg-purple-900/30 px-3 py-1 rounded-full border dark:border-purple-800">
@@ -156,7 +152,7 @@ function WeddingInvitations() {
           )}
         </div>
 
-        {/* Action Buttons */}
+   
         <div className="flex space-x-3">
           <button 
             onClick={(e) => e.stopPropagation()} 
@@ -180,7 +176,7 @@ function WeddingInvitations() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Navbar />
       
-      {/* Header Section */}
+    
       <div className="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 dark:from-pink-700 dark:via-purple-800 dark:to-indigo-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
@@ -199,7 +195,6 @@ function WeddingInvitations() {
         </div>
       </div>
 
-      {/* Category Tabs */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-40 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8 overflow-x-auto py-4 scrollbar-hide">
@@ -220,7 +215,7 @@ function WeddingInvitations() {
         </div>
       </div>
 
-      {/* Filters Section */}
+
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -276,7 +271,7 @@ function WeddingInvitations() {
         </div>
       </div>
 
-      {/* Invitations Grid */}
+     
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

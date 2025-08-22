@@ -36,7 +36,7 @@ function WeddingCategories() {
         onClick={redirect}
         className="group dark:bg-gray-800   cursor-pointer relative overflow-hidden rounded-2xl bg-white border border-gray-200 hover:border-pink-300 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105"
       >
-        {/* Background Image with Overlay */}
+      
         <div className="relative h-48 overflow-hidden">
           <img 
             src={image} 
@@ -44,14 +44,12 @@ function WeddingCategories() {
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-          
-          {/* Favorite Icon */}
+        
           <button className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300">
             <Heart size={18} className="text-white" />
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xl dark:text-white font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">
@@ -71,7 +69,7 @@ function WeddingCategories() {
             </div>
           </div>
 
-          {/* Hover Effect Bar */}
+        
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
         </div>
       </div>
@@ -93,44 +91,13 @@ function WeddingCategories() {
     <div className="min-h-screen dark:bg-gray-900 bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       <Navbar />
       <div className="dark:bg-gray-900">
-      {/* Hero Section */}
-      {/* <div className="relative bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 text-white">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-pink-200 bg-clip-text text-transparent">
-              Your Dream Wedding
-            </h1>
-            <p className="text-xl md:text-2xl text-pink-100 mb-8 max-w-3xl mx-auto">
-              Plan the perfect celebration with our comprehensive wedding services
-            </p>
-            <div className="flex items-center justify-center space-x-8 text-pink-200">
-              <div className="flex items-center space-x-2">
-                <Calendar size={20} />
-                <span>Plan Your Day</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Star size={20} />
-                <span>Premium Services</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Heart size={20} />
-                <span>Made with Love</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+     
       <div className="relative text-white w-full h-screen">
-  {/* Background Video */}
  <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
   <source src="/GROUP-PROJECT-1/video.mp4" alt="unable to load video" type="video/mp4" />
 </video>
-
-  {/* Optional overlay for better contrast */}
   <div className="absolute  inset-0 bg-black/40"></div>
 
-  {/* Content */}
   <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div className="text-center">
       <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-pink-200 bg-clip-text text-transparent">
@@ -140,14 +107,14 @@ function WeddingCategories() {
         Plan the perfect celebration with our comprehensive wedding services
       </p>
       <div className="flex dark:bg-gray-900 items-center justify-center space-x-8 text-pink-200">
-        {/* Your buttons or icons */}
+
       </div>
     </div>
   </div>
 </div>
 
 
-      {/* Categories Section */}
+    
       <div className="max-w-7xl dark:bg-gray-900 mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl dark:text-white md:text-4xl font-bold text-gray-900 mb-4">
@@ -165,7 +132,7 @@ function WeddingCategories() {
         </div>
       </div>
 
-      {/* Call to Action Section */}
+     
       <div className=" dark:bg-gray-900 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center text-white">
